@@ -21,11 +21,11 @@
       --accent-soft: #fff1e8;
       --safe: #0f766e;
       --warn: #b45309;
-      --stop: #2563eb;
       --red: #b91c1c;
       --green: #15803d;
       --blue: #2563eb;
       --purple: #7c3aed;
+      --shadow: 0 18px 48px rgba(88, 62, 34, 0.09);
     }
 
     * { box-sizing: border-box; }
@@ -40,6 +40,7 @@
     }
 
     a { color: var(--accent); }
+    button, input { font: inherit; }
 
     .wrap {
       width: min(1120px, calc(100% - 32px));
@@ -51,7 +52,7 @@
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 22px;
-      box-shadow: 0 18px 48px rgba(88, 62, 34, 0.09);
+      box-shadow: var(--shadow);
     }
 
     .hero {
@@ -61,7 +62,7 @@
 
     .card { padding: 24px; }
 
-    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3, h4, p, ul, figure { margin: 0; }
 
     h1 {
       font-size: clamp(28px, 5vw, 44px);
@@ -96,26 +97,30 @@
     .plans,
     .sources,
     .notes,
-    .gallery {
+    .gallery-grid,
+    .gallery-groups,
+    .accordion {
       display: grid;
       gap: 14px;
     }
 
     .grid { gap: 20px; }
-
     .facts { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .gallery { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .plans { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 
     .section-title {
       font-size: 22px;
-      margin-bottom: 16px;
+      margin: 0;
     }
 
     .fact,
     .plan,
     .source-item,
     .note-box,
-    .photo-card {
+    .photo-card,
+    .timetable-panel,
+    .gallery-group {
       background: #fffdf8;
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -124,7 +129,9 @@
     .fact,
     .plan,
     .source-item,
-    .note-box {
+    .note-box,
+    .timetable-panel,
+    .gallery-group {
       padding: 16px 18px;
     }
 
@@ -141,7 +148,9 @@
 
     .plan h3,
     .source-item h3,
-    .note-box h3 {
+    .note-box h3,
+    .gallery-group h3,
+    .timetable-panel h3 {
       font-size: 17px;
       margin-bottom: 8px;
     }
@@ -149,7 +158,9 @@
     .plan p,
     .source-item p,
     .note-box p,
-    .note-box li {
+    .note-box li,
+    .gallery-group p,
+    .timetable-panel p {
       line-height: 1.7;
     }
 
@@ -168,6 +179,145 @@
       font-size: 14px;
       line-height: 1.7;
       margin-top: 12px;
+    }
+
+    .accordion-item { overflow: hidden; }
+
+    .accordion-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .accordion-toggle::after {
+      content: "＋";
+      flex: none;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .accordion-item.is-open .accordion-toggle::after { content: "−"; }
+    .accordion-body { display: none; padding-top: 18px; }
+    .accordion-item.is-open .accordion-body { display: block; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .filter-input {
+      width: min(320px, 100%);
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fffdf8;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fffdf8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #eadfcd;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    th { background: #fff6ee; white-space: nowrap; }
+
+    th button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .sort-indicator { font-size: 12px; color: var(--muted); }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr[hidden] { display: none; }
+
+    .tab-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .tab-button {
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff7ef;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .tab-button.is-active {
+      color: #fff;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .timetable-panel { display: none; }
+    .timetable-panel.is-active { display: block; }
+
+    .timetable-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .timetable-row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid #eadfcd;
+    }
+
+    .timetable-row:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .timetable-time {
+      font-weight: 700;
+      color: var(--accent);
     }
 
     .map-layout {
@@ -201,28 +351,29 @@
       z-index: 500;
     }
 
-    .photo-card { overflow: hidden; }
+    .leaflet-popup-content { margin: 12px 14px; line-height: 1.7; }
+    .leaflet-popup-content strong { color: var(--accent); }
+
+    .gallery-group { display: grid; gap: 14px; }
+    .gallery-plan-meta { color: var(--muted); font-size: 14px; }
+
+    .photo-card {
+      overflow: hidden;
+      cursor: pointer;
+      background: #fffdf8;
+    }
 
     .photo-card img {
       display: block;
       width: 100%;
-      height: 220px;
+      height: 200px;
       object-fit: cover;
       background: #e5e7eb;
     }
 
-    .photo-copy {
-      padding: 14px 16px 16px;
-    }
-
-    .photo-copy h3 {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-
-    .photo-copy p {
-      line-height: 1.7;
-    }
+    .photo-copy { padding: 14px 16px 16px; }
+    .photo-copy h4 { margin-bottom: 8px; font-size: 16px; }
+    .photo-copy p { line-height: 1.7; color: var(--muted); font-size: 14px; }
 
     .footer {
       margin-top: 18px;
@@ -231,9 +382,79 @@
       text-align: right;
     }
 
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(17, 24, 39, 0.78);
+      z-index: 4000;
+    }
+
+    .lightbox.is-open { display: flex; }
+
+    .lightbox-dialog {
+      position: relative;
+      width: min(980px, 100%);
+      max-height: 92vh;
+      background: #fffdf8;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+    }
+
+    .lightbox-image {
+      width: 100%;
+      max-height: 72vh;
+      object-fit: contain;
+      background: #111827;
+      display: block;
+    }
+
+    .lightbox-copy { padding: 16px 20px 20px; }
+    .lightbox-copy h3 { margin-bottom: 8px; font-size: 20px; }
+    .lightbox-copy p { line-height: 1.7; color: var(--muted); }
+
+    .lightbox-close,
+    .lightbox-nav {
+      position: absolute;
+      border: 0;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: #fff;
+      background: rgba(17, 24, 39, 0.7);
+    }
+
+    .lightbox-close {
+      top: 14px;
+      right: 14px;
+      width: 42px;
+      height: 42px;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .lightbox-nav {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      font-size: 26px;
+    }
+
+    .lightbox-prev { left: 14px; }
+    .lightbox-next { right: 14px; }
+
     @media (max-width: 860px) {
       .map-layout { grid-template-columns: 1fr; }
       #map { min-height: 420px; }
+      .timetable-row { grid-template-columns: 1fr; gap: 4px; }
+      .toolbar { align-items: stretch; }
+      .filter-input { width: 100%; }
     }
   </style>
 </head>
@@ -254,124 +475,137 @@
       </div>
     </section>
 
-    <section class="grid">
-      <article class="card">
-        <h2 class="section-title">共通条件</h2>
-        <div class="facts">
-          <div class="fact">
-            <div class="label">出発地</div>
-            <div class="value">愛媛県新居浜市庄内町5丁目9-20</div>
+    <section class="grid accordion" id="report-accordion">
+      <article class="card accordion-item is-open">
+        <button class="accordion-toggle" type="button" aria-expanded="true">
+          <h2 class="section-title">共通条件</h2>
+        </button>
+        <div class="accordion-body">
+          <div class="facts">
+            <div class="fact"><div class="label">出発地</div><div class="value">愛媛県新居浜市庄内町5丁目9-20</div></div>
+            <div class="fact"><div class="label">目的地</div><div class="value">シャトレーゼ ガトーキングダム せとうち</div></div>
+            <div class="fact"><div class="label">ホテル住所</div><div class="value">広島県呉市安浦町三津口326-48</div></div>
+            <div class="fact"><div class="label">到着条件</div><div class="value">2026-04-12 14:30ごろ到着、早着しすぎない</div></div>
+            <div class="fact"><div class="label">昼食条件</div><div class="value">12時ごろに食事へ入れる場所を選ぶ</div></div>
+            <div class="fact"><div class="label">昼食時間</div><div class="value">1時間</div></div>
+            <div class="fact"><div class="label">バッファ</div><div class="value">立ち寄り先までに30分の余裕を確保</div></div>
+            <div class="fact"><div class="label">ホテル連絡先</div><div class="value">0823-84-0262</div></div>
           </div>
-          <div class="fact">
-            <div class="label">目的地</div>
-            <div class="value">シャトレーゼ ガトーキングダム せとうち</div>
-          </div>
-          <div class="fact">
-            <div class="label">ホテル住所</div>
-            <div class="value">広島県呉市安浦町三津口326-48</div>
-          </div>
-          <div class="fact">
-            <div class="label">到着条件</div>
-            <div class="value">2026-04-12 14:30ごろ到着、早着しすぎない</div>
-          </div>
-          <div class="fact">
-            <div class="label">昼食条件</div>
-            <div class="value">12時ごろに食事へ入れる場所を選ぶ</div>
-          </div>
-          <div class="fact">
-            <div class="label">昼食時間</div>
-            <div class="value">1時間</div>
-          </div>
-          <div class="fact">
-            <div class="label">バッファ</div>
-            <div class="value">立ち寄り先までに30分の余裕しろ</div>
-          </div>
-          <div class="fact">
-            <div class="label">ホテル連絡先</div>
-            <div class="value">0823-84-0262</div>
-          </div>
-        </div>
-        <p class="note">
-          食事は立ち寄りの前後を固定しません。各プランで12時ごろに入りやすい店を選び、最後は14:25-14:30でホテルに入る運用です。
-        </p>
-      </article>
-
-      <article class="card">
-        <h2 class="section-title">比較</h2>
-        <div class="plans">
-          <section class="plan">
-            <h3>プランA: ドルフィンファームしまなみ</h3>
-            <p>立ち寄り: ドルフィンファームしまなみ</p>
-            <p>昼食: 道の駅 伯方S・Cパーク マリンオアシスはかた</p>
-            <p>組みやすさ: 中</p>
-          </section>
-          <section class="plan">
-            <h3>プランB: 多々羅しまなみ公園</h3>
-            <p>立ち寄り: 多々羅しまなみ公園</p>
-            <p>昼食: 多々羅レストラン</p>
-            <p>組みやすさ: 高</p>
-          </section>
-          <section class="plan">
-            <h3>プランC: HAKKOパーク</h3>
-            <p>立ち寄り: HAKKOパーク</p>
-            <p>昼食: HAKKOパーク内カフェ</p>
-            <p>組みやすさ: 高</p>
-          </section>
-          <section class="plan">
-            <h3>プランD: 千光寺山ロープウェイ</h3>
-            <p>立ち寄り: 千光寺山ロープウェイを軽く往復</p>
-            <p>昼食: 小谷サービスエリア（下り）</p>
-            <p>組みやすさ: 中</p>
-          </section>
+          <p class="note">
+            食事は立ち寄りの前後を固定しません。各プランで12時ごろに入りやすい店を選び、最後は14:25-14:30でホテルに入る運用です。
+          </p>
         </div>
       </article>
 
-      <article class="card">
-        <h2 class="section-title">個別タイムテーブル</h2>
-        <div class="plans">
-          <section class="plan safe">
-            <h3>プランA: ドルフィンファームしまなみ</h3>
-            <p>08:25 出発</p>
-            <p>09:31 今治IC 通過見込み</p>
-            <p>10:05 ドルフィンファームしまなみ 到着</p>
-            <p>10:05-10:45 見学</p>
-            <p>11:40 道の駅 伯方S・Cパーク マリンオアシスはかた 到着</p>
-            <p>11:40-12:40 昼食</p>
-            <p>14:28 ホテル到着見込み</p>
+      <article class="card accordion-item is-open">
+        <button class="accordion-toggle" type="button" aria-expanded="true">
+          <h2 class="section-title">プラン比較</h2>
+        </button>
+        <div class="accordion-body">
+          <div class="toolbar">
+            <div class="label">ヘッダークリックで並び替え / テキストで絞り込み</div>
+            <input id="comparison-filter" class="filter-input" type="text" placeholder="プラン名・立ち寄り先・昼食場所で検索">
+          </div>
+          <div class="table-wrap">
+            <table id="comparison-table">
+              <thead>
+                <tr>
+                  <th><button type="button" data-sort="plan">プラン<span class="sort-indicator">⇅</span></button></th>
+                  <th><button type="button" data-sort="spot">立ち寄り<span class="sort-indicator">⇅</span></button></th>
+                  <th><button type="button" data-sort="lunch">昼食<span class="sort-indicator">⇅</span></button></th>
+                  <th><button type="button" data-sort="departure">出発<span class="sort-indicator">⇅</span></button></th>
+                  <th><button type="button" data-sort="arrival">ホテル到着<span class="sort-indicator">⇅</span></button></th>
+                  <th><button type="button" data-sort="duration">総所要<span class="sort-indicator">⇅</span></button></th>
+                  <th><button type="button" data-sort="fit">組みやすさ<span class="sort-indicator">⇅</span></button></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-plan="Plan A ドルフィンファームしまなみ" data-spot="ドルフィンファームしまなみ" data-lunch="道の駅 伯方S・Cパーク マリンオアシスはかた" data-departure="08:25" data-arrival="14:28" data-duration="6時間03分" data-fit="中">
+                  <td>Plan A</td><td>ドルフィンファームしまなみ</td><td>道の駅 伯方S・Cパーク マリンオアシスはかた</td><td>08:25</td><td>14:28</td><td>6時間03分</td><td>中</td>
+                </tr>
+                <tr data-plan="Plan B 多々羅しまなみ公園" data-spot="多々羅しまなみ公園" data-lunch="多々羅レストラン" data-departure="08:40" data-arrival="14:27" data-duration="5時間47分" data-fit="高">
+                  <td>Plan B</td><td>多々羅しまなみ公園</td><td>多々羅レストラン</td><td>08:40</td><td>14:27</td><td>5時間47分</td><td>高</td>
+                </tr>
+                <tr data-plan="Plan C HAKKOパーク" data-spot="HAKKOパーク" data-lunch="HAKKOパーク内カフェ" data-departure="08:30" data-arrival="14:26" data-duration="5時間56分" data-fit="高">
+                  <td>Plan C</td><td>HAKKOパーク</td><td>HAKKOパーク内カフェ</td><td>08:30</td><td>14:26</td><td>5時間56分</td><td>高</td>
+                </tr>
+                <tr data-plan="Plan D 千光寺山ロープウェイ" data-spot="千光寺山ロープウェイ" data-lunch="小谷サービスエリア（下り）" data-departure="08:35" data-arrival="14:28" data-duration="5時間53分" data-fit="中">
+                  <td>Plan D</td><td>千光寺山ロープウェイ</td><td>小谷サービスエリア（下り）</td><td>08:35</td><td>14:28</td><td>5時間53分</td><td>中</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">比較は簡潔に確認し、詳細は下のタイムテーブルでプランごとに切り替えて見られます。</p>
+        </div>
+      </article>
+
+      <article class="card accordion-item is-open">
+        <button class="accordion-toggle" type="button" aria-expanded="true">
+          <h2 class="section-title">タイムテーブル</h2>
+        </button>
+        <div class="accordion-body">
+          <div class="tab-list" role="tablist" aria-label="プラン別タイムテーブル">
+            <button class="tab-button is-active" type="button" role="tab" aria-selected="true" data-tab-target="plan-a">Plan A</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="plan-b">Plan B</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="plan-c">Plan C</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="plan-d">Plan D</button>
+          </div>
+
+          <section id="plan-a" class="timetable-panel is-active" role="tabpanel">
+            <h3>Plan A: ドルフィンファームしまなみ</h3>
+            <p>立ち寄り見学と伯方島ランチを挟み、14:28 到着を狙う構成です。</p>
+            <div class="timetable-list">
+              <div class="timetable-row"><div class="timetable-time">08:25</div><div>出発</div></div>
+              <div class="timetable-row"><div class="timetable-time">09:31</div><div>今治IC 通過見込み</div></div>
+              <div class="timetable-row"><div class="timetable-time">10:05</div><div>ドルフィンファームしまなみ 到着</div></div>
+              <div class="timetable-row"><div class="timetable-time">10:05-10:45</div><div>見学</div></div>
+              <div class="timetable-row"><div class="timetable-time">11:40</div><div>道の駅 伯方S・Cパーク マリンオアシスはかた 到着</div></div>
+              <div class="timetable-row"><div class="timetable-time">11:40-12:40</div><div>昼食</div></div>
+              <div class="timetable-row"><div class="timetable-time">14:28</div><div>ホテル到着見込み</div></div>
+            </div>
           </section>
 
-          <section class="plan safe">
-            <h3>プランB: 多々羅しまなみ公園</h3>
-            <p>08:40 出発</p>
-            <p>09:46 今治IC 通過見込み</p>
-            <p>10:35 多々羅しまなみ公園 到着</p>
-            <p>10:35-11:10 散策</p>
-            <p>11:55 多々羅レストラン 到着</p>
-            <p>11:55-12:55 昼食</p>
-            <p>14:27 ホテル到着見込み</p>
+          <section id="plan-b" class="timetable-panel" role="tabpanel" hidden>
+            <h3>Plan B: 多々羅しまなみ公園</h3>
+            <p>散策時間を短めに抑え、多々羅レストランに 11:55 で入る組みやすいプランです。</p>
+            <div class="timetable-list">
+              <div class="timetable-row"><div class="timetable-time">08:40</div><div>出発</div></div>
+              <div class="timetable-row"><div class="timetable-time">09:46</div><div>今治IC 通過見込み</div></div>
+              <div class="timetable-row"><div class="timetable-time">10:35</div><div>多々羅しまなみ公園 到着</div></div>
+              <div class="timetable-row"><div class="timetable-time">10:35-11:10</div><div>散策</div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55</div><div>多々羅レストラン 到着</div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55-12:55</div><div>昼食</div></div>
+              <div class="timetable-row"><div class="timetable-time">14:27</div><div>ホテル到着見込み</div></div>
+            </div>
           </section>
 
-          <section class="plan safe">
-            <h3>プランC: HAKKOパーク</h3>
-            <p>08:30 出発</p>
-            <p>10:20 HAKKOパーク 到着</p>
-            <p>10:20-11:05 見学</p>
-            <p>11:55 HAKKOパーク内カフェ 到着</p>
-            <p>11:55-12:55 昼食</p>
-            <p>14:26 ホテル到着見込み</p>
+          <section id="plan-c" class="timetable-panel" role="tabpanel" hidden>
+            <h3>Plan C: HAKKOパーク</h3>
+            <p>尾道側へ寄りながら発酵テーマの見学と施設内カフェで昼食を完結させます。</p>
+            <div class="timetable-list">
+              <div class="timetable-row"><div class="timetable-time">08:30</div><div>出発</div></div>
+              <div class="timetable-row"><div class="timetable-time">10:20</div><div>HAKKOパーク 到着</div></div>
+              <div class="timetable-row"><div class="timetable-time">10:20-11:05</div><div>見学</div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55</div><div>HAKKOパーク内カフェ 到着</div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55-12:55</div><div>昼食</div></div>
+              <div class="timetable-row"><div class="timetable-time">14:26</div><div>ホテル到着見込み</div></div>
+            </div>
           </section>
 
-          <section class="plan safe">
-            <h3>プランD: 千光寺山ロープウェイ</h3>
-            <p>08:35 出発</p>
-            <p>10:50 千光寺山ロープウェイ周辺 到着</p>
-            <p>10:50-11:55 軽く往復</p>
-            <p>12:25 小谷サービスエリア（下り） 到着</p>
-            <p>12:25-13:25 昼食</p>
-            <p>14:28 ホテル到着見込み</p>
+          <section id="plan-d" class="timetable-panel" role="tabpanel" hidden>
+            <h3>Plan D: 千光寺山ロープウェイ</h3>
+            <p>尾道の景観を軽く回収してから、小谷サービスエリアで昼食を取る広島側寄りの構成です。</p>
+            <div class="timetable-list">
+              <div class="timetable-row"><div class="timetable-time">08:35</div><div>出発</div></div>
+              <div class="timetable-row"><div class="timetable-time">10:50</div><div>千光寺山ロープウェイ周辺 到着</div></div>
+              <div class="timetable-row"><div class="timetable-time">10:50-11:55</div><div>軽く往復</div></div>
+              <div class="timetable-row"><div class="timetable-time">12:25</div><div>小谷サービスエリア（下り） 到着</div></div>
+              <div class="timetable-row"><div class="timetable-time">12:25-13:25</div><div>昼食</div></div>
+              <div class="timetable-row"><div class="timetable-time">14:28</div><div>ホテル到着見込み</div></div>
+            </div>
           </section>
 
-          <section class="plan warn">
+          <section class="plan warn" aria-label="運用メモ">
             <h3>運用メモ</h3>
             <p>どのプランも 14:30 に対して数分の余裕で合わせています。</p>
             <p>途中で巻いた場合は、立ち寄り先ではなく昼食地点で調整する方が安定します。</p>
@@ -379,115 +613,211 @@
         </div>
       </article>
 
-      <article class="card">
-        <h2 class="section-title">Route Map</h2>
-        <div class="map-layout">
-          <div id="map" aria-label="旅行ルートマップ">
-            <div class="map-fallback" id="map-fallback">
-              地図ライブラリまたは道路ルートを読み込めなかったため、実道路経路を表示できません。
+      <article class="card accordion-item is-open">
+        <button class="accordion-toggle" type="button" aria-expanded="true">
+          <h2 class="section-title">マップ</h2>
+        </button>
+        <div class="accordion-body">
+          <div class="map-layout">
+            <div id="map" aria-label="旅行ルートマップ">
+              <div class="map-fallback" id="map-fallback">
+                地図ライブラリまたは道路ルートを読み込めなかったため、実道路経路を表示できません。
+              </div>
+            </div>
+            <div class="notes">
+              <section class="note-box">
+                <h3>地図の表示</h3>
+                <p>Leaflet と OpenStreetMap、OSRM の車ルーティングを使い、4プランを色分けしています。</p>
+              </section>
+              <section class="note-box">
+                <h3>クリック挙動</h3>
+                <p>ルート線または各地点マーカーをクリックすると、プラン名・主要立ち寄り先・総所要がポップアップで確認できます。</p>
+              </section>
+              <section class="note-box">
+                <h3>色分け</h3>
+                <ul>
+                  <li>赤: ドルフィンファームしまなみ</li>
+                  <li>緑: 多々羅しまなみ公園</li>
+                  <li>青: HAKKOパーク</li>
+                  <li>紫: 千光寺山ロープウェイ</li>
+                </ul>
+              </section>
             </div>
           </div>
-          <div class="notes">
-            <section class="note-box">
-              <h3>地図の表示</h3>
-              <p>地図は Leaflet と OpenStreetMap、ルートは OSRM の車ルーティングを使っています。</p>
+        </div>
+      </article>
+
+      <article class="card accordion-item is-open">
+        <button class="accordion-toggle" type="button" aria-expanded="true">
+          <h2 class="section-title">写真</h2>
+        </button>
+        <div class="accordion-body">
+          <div class="gallery-groups">
+            <section class="gallery-group">
+              <div>
+                <h3>Plan A</h3>
+                <p class="gallery-plan-meta">ドルフィンファームしまなみと伯方島ランチ周辺のイメージ。</p>
+              </div>
+              <div class="gallery-grid">
+                <figure class="photo-card" data-lightbox-group="plan-a" data-full="https://source.unsplash.com/1600x1200/?dolphin,sea,japan" data-title="ドルフィンファームしまなみ" data-description="しまなみ海道の海沿いでイルカ見学の雰囲気をつかみやすい代表イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?dolphin,sea,japan" alt="ドルフィンファームしまなみのイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>ドルフィンファームしまなみ</h4><p>海沿いでイルカ見学を楽しむプランAの主目的地。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-a" data-full="https://source.unsplash.com/1600x1200/?island,sea,bridge,japan" data-title="伯方島周辺" data-description="伯方島らしい海景色を感じるための補助イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?island,sea,bridge,japan" alt="伯方島周辺の海景イメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>伯方島周辺</h4><p>見学後に昼食へ向かう流れを想像しやすい海辺の風景。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-a" data-full="https://source.unsplash.com/1600x1200/?seafood,lunch,japan" data-title="マリンオアシスはかた" data-description="海辺の食堂で昼食を取るPlan Aのランチイメージ。">
+                  <img src="https://source.unsplash.com/800x600/?seafood,lunch,japan" alt="マリンオアシスはかたの昼食イメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>マリンオアシスはかた</h4><p>12時前後に入りやすい海鮮系ランチのイメージ。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-a" data-full="https://source.unsplash.com/1600x1200/?coast,roadtrip,japan" data-title="しまなみ海道ドライブ" data-description="海沿いを走る区間の気分を補うドライブイメージ。">
+                  <img src="https://source.unsplash.com/800x600/?coast,roadtrip,japan" alt="しまなみ海道ドライブのイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>しまなみ海道ドライブ</h4><p>立ち寄りと昼食の間をつなぐ移動時間の景観イメージ。</p></figcaption>
+                </figure>
+              </div>
             </section>
-            <section class="note-box">
-              <h3>描画中のルート</h3>
-              <p>地図上には 4プランすべての車ルートを重ねて表示しています。</p>
+
+            <section class="gallery-group">
+              <div>
+                <h3>Plan B</h3>
+                <p class="gallery-plan-meta">多々羅しまなみ公園の景観とレストラン利用をまとめた写真群。</p>
+              </div>
+              <div class="gallery-grid">
+                <figure class="photo-card" data-lightbox-group="plan-b" data-full="https://source.unsplash.com/1600x1200/?bridge,park,japan" data-title="多々羅しまなみ公園" data-description="橋の眺望を楽しみやすいPlan Bの代表イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?bridge,park,japan" alt="多々羅しまなみ公園のイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>多々羅しまなみ公園</h4><p>短時間散策でも満足感を出しやすい展望系スポット。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-b" data-full="https://source.unsplash.com/1600x1200/?cycling,bridge,japan" data-title="しまなみの橋景色" data-description="海峡と橋の抜け感を補う参考イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?cycling,bridge,japan" alt="しまなみの橋景色イメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>橋の景観</h4><p>多々羅大橋周辺の開放感をイメージしやすい一枚。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-b" data-full="https://source.unsplash.com/1600x1200/?restaurant,japanese,lunch" data-title="多々羅レストラン" data-description="昼食を12時前後に取りやすいPlan Bの食事イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?restaurant,japanese,lunch" alt="多々羅レストランの昼食イメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>多々羅レストラン</h4><p>公園散策から自然につなげやすい昼食地点。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-b" data-full="https://source.unsplash.com/1600x1200/?seaside,cafe,japan" data-title="公園周辺の休憩風景" data-description="公園利用後の休憩感を補う海辺の参考イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?seaside,cafe,japan" alt="公園周辺の休憩風景イメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>公園周辺の休憩風景</h4><p>散策後にペースを崩さず昼食へ移る雰囲気を表現。</p></figcaption>
+                </figure>
+              </div>
             </section>
-            <section class="note-box">
-              <h3>色分け</h3>
-              <ul>
-                <li>赤: ドルフィンファームしまなみ</li>
-                <li>緑: 多々羅しまなみ公園</li>
-                <li>青: HAKKOパーク</li>
-                <li>紫: 千光寺山ロープウェイ</li>
-              </ul>
+
+            <section class="gallery-group">
+              <div>
+                <h3>Plan C</h3>
+                <p class="gallery-plan-meta">HAKKOパークと施設内カフェを軸にした発酵テーマの写真群。</p>
+              </div>
+              <div class="gallery-grid">
+                <figure class="photo-card" data-lightbox-group="plan-c" data-full="https://source.unsplash.com/1600x1200/?garden,japan,park" data-title="HAKKOパーク" data-description="緑地を歩きながら見学するPlan Cの主スポットイメージ。">
+                  <img src="https://source.unsplash.com/800x600/?garden,japan,park" alt="HAKKOパークのイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>HAKKOパーク</h4><p>発酵テーマの見学前後で歩きやすい開放的な敷地を想起。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-c" data-full="https://source.unsplash.com/1600x1200/?fermentation,food,japan" data-title="発酵展示イメージ" data-description="発酵をテーマにしたPlan Cの学び要素を補う写真。">
+                  <img src="https://source.unsplash.com/800x600/?fermentation,food,japan" alt="発酵展示のイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>発酵展示イメージ</h4><p>施設見学の内容を視覚的に補う参考イメージ。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-c" data-full="https://source.unsplash.com/1600x1200/?cafe,lunch,japan" data-title="HAKKOパーク内カフェ" data-description="施設内でそのまま昼食に入るPlan Cのランチイメージ。">
+                  <img src="https://source.unsplash.com/800x600/?cafe,lunch,japan" alt="HAKKOパーク内カフェのイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>HAKKOパーク内カフェ</h4><p>移動を増やさず 11:55 に昼食へつなげやすい構成。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-c" data-full="https://source.unsplash.com/1600x1200/?organic,tea,japan" data-title="施設内の休憩イメージ" data-description="発酵系カフェの落ち着いた雰囲気を補う参考写真。">
+                  <img src="https://source.unsplash.com/800x600/?organic,tea,japan" alt="施設内の休憩イメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>施設内の休憩イメージ</h4><p>見学後にそのまま食事と休憩をまとめやすい点を表現。</p></figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <section class="gallery-group">
+              <div>
+                <h3>Plan D</h3>
+                <p class="gallery-plan-meta">尾道景観と小谷サービスエリアの昼食を組み合わせた写真群。</p>
+              </div>
+              <div class="gallery-grid">
+                <figure class="photo-card" data-lightbox-group="plan-d" data-full="https://source.unsplash.com/1600x1200/?ropeway,japan,city" data-title="千光寺山ロープウェイ" data-description="尾道らしい高低差と市街地眺望を感じるPlan Dの代表イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?ropeway,japan,city" alt="千光寺山ロープウェイのイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>千光寺山ロープウェイ</h4><p>短時間で景色を回収しやすいPlan Dの主目的地。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-d" data-full="https://source.unsplash.com/1600x1200/?onomichi,japan,street" data-title="尾道の坂道風景" data-description="ロープウェイ周辺の街歩き感を補う参考イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?onomichi,japan,street" alt="尾道の坂道風景イメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>尾道の坂道風景</h4><p>往復の前後で感じる尾道らしい街並みのイメージ。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-d" data-full="https://source.unsplash.com/1600x1200/?service-area,food,japan" data-title="小谷サービスエリア（下り）" data-description="高速移動の流れを崩さず昼食を取るPlan Dの食事イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?service-area,food,japan" alt="小谷サービスエリアのイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>小谷サービスエリア（下り）</h4><p>12:25 到着でも回しやすいサービスエリア昼食。</p></figcaption>
+                </figure>
+                <figure class="photo-card" data-lightbox-group="plan-d" data-full="https://source.unsplash.com/1600x1200/?highway,lunch,japan" data-title="サービスエリア昼食" data-description="高速道路移動中の食事休憩を補う参考イメージ。">
+                  <img src="https://source.unsplash.com/800x600/?highway,lunch,japan" alt="サービスエリア昼食のイメージ" loading="lazy">
+                  <figcaption class="photo-copy"><h4>サービスエリア昼食</h4><p>移動優先でも食事時間を確保しやすい点を視覚化。</p></figcaption>
+                </figure>
+              </div>
             </section>
           </div>
         </div>
       </article>
 
-      <article class="card">
-        <h2 class="section-title">Spot Photos</h2>
-        <div class="gallery">
-          <figure class="photo-card">
-            <img src="https://tabetainjya.com/img/1910/kodani19.jpg" alt="小谷サービスエリア下りの外観" loading="lazy">
-            <figcaption class="photo-copy">
-              <h3>小谷サービスエリア（下り）</h3>
-              <p>千光寺プランでの昼食地点です。</p>
-            </figcaption>
-          </figure>
-          <figure class="photo-card">
-            <img src="https://tabetainjya.com/img/1910/kodani05.jpg" alt="小谷サービスエリアのフードコート" loading="lazy">
-            <figcaption class="photo-copy">
-              <h3>フードコート</h3>
-              <p>広島側プランの昼食候補イメージです。</p>
-            </figcaption>
-          </figure>
-          <figure class="photo-card">
-            <img src="https://hit-product-resources-public.s3.ap-northeast-1.amazonaws.com/images/4712/2llE1Kch7iXpOcKxWP03/original.jpg" alt="シャトレーゼ ガトーキングダム せとうちの外観" loading="lazy">
-            <figcaption class="photo-copy">
-              <h3>シャトレーゼ ガトーキングダム せとうち</h3>
-              <p>14:25-14:30 に入る想定です。</p>
-            </figcaption>
-          </figure>
-          <figure class="photo-card">
-            <img src="https://hit-product-resources-public.s3.ap-northeast-1.amazonaws.com/images/4712/5xxTEa7kVgfjSPoKKL3E/original.jpg" alt="ホテル周辺イメージ" loading="lazy">
-            <figcaption class="photo-copy">
-              <h3>ホテル周辺</h3>
-              <p>到着後の景観イメージです。</p>
-            </figcaption>
-          </figure>
-        </div>
-      </article>
-
-      <article class="card">
-        <h2 class="section-title">Sources</h2>
-        <div class="sources">
-          <section class="source-item">
-            <h3>高速所要</h3>
-            <p>新居浜IC → 今治IC: 通常 1時間6分</p>
-            <p>今治IC → 高屋JCT: 通常 1時間37分</p>
-            <p><a href="https://www.navitime.co.jp/highway/route/searchlist?arvIcId=403120&arvIcType=ic&depIcId=47040&depIcType=ic">NAVITIME</a></p>
-            <p><a href="https://www.atis.co.jp/route/result/1383-2177/">ATIS</a></p>
-          </section>
-          <section class="source-item">
-            <h3>ドルフィンファームしまなみ</h3>
-            <p><a href="https://www.df-shimanami.com/access/">公式アクセス</a></p>
-            <p><a href="https://www.df-shimanami.com/facility_information/">公式施設案内</a></p>
-          </section>
-          <section class="source-item">
-            <h3>マリンオアシスはかた</h3>
-            <p><a href="https://www.ononavi.jp/brand/detail.html?detail_id=828">尾道観光情報</a></p>
-          </section>
-          <section class="source-item">
-            <h3>多々羅しまなみ公園 / 多々羅レストラン</h3>
-            <p><a href="https://www.oideya.gr.jp/spot-c/tatara-3/">今治地方観光協会</a></p>
-            <p><a href="https://imabari-shimanami.jp/tatara-restaurant/">レストラン案内</a></p>
-          </section>
-          <section class="source-item">
-            <h3>HAKKOパーク</h3>
-            <p><a href="https://mandahakkopark.com/">公式サイト</a></p>
-            <p><a href="https://www.mandahakko.com/article/shop.html">万田発酵公式案内</a></p>
-          </section>
-          <section class="source-item">
-            <h3>千光寺山ロープウェイ</h3>
-            <p><a href="https://mt-senkoji-rw.jp/fare/service/">公式運行情報</a></p>
-            <p><a href="https://www.city.onomichi.hiroshima.jp/site/onomichikanko/1317.html">尾道市観光情報</a></p>
-          </section>
-          <section class="source-item">
-            <h3>ホテル</h3>
-            <p><a href="https://setouchi.gateauxkingdom.com/">ホテル公式</a></p>
-            <p><a href="https://travel.rakuten.co.jp/HOTEL/164652/164652_std.html">楽天トラベル</a></p>
-          </section>
+      <article class="card accordion-item is-open">
+        <button class="accordion-toggle" type="button" aria-expanded="true">
+          <h2 class="section-title">出典</h2>
+        </button>
+        <div class="accordion-body">
+          <div class="sources">
+            <section class="source-item">
+              <h3>高速所要</h3>
+              <p>新居浜IC → 今治IC: 通常 1時間6分</p>
+              <p>今治IC → 高屋JCT: 通常 1時間37分</p>
+              <p><a href="https://www.navitime.co.jp/highway/route/searchlist?arvIcId=403120&amp;arvIcType=ic&amp;depIcId=47040&amp;depIcType=ic">NAVITIME</a></p>
+              <p><a href="https://www.atis.co.jp/route/result/1383-2177/">ATIS</a></p>
+            </section>
+            <section class="source-item">
+              <h3>ドルフィンファームしまなみ</h3>
+              <p><a href="https://www.df-shimanami.com/access/">公式アクセス</a></p>
+              <p><a href="https://www.df-shimanami.com/facility_information/">公式施設案内</a></p>
+            </section>
+            <section class="source-item">
+              <h3>マリンオアシスはかた</h3>
+              <p><a href="https://www.ononavi.jp/brand/detail.html?detail_id=828">尾道観光情報</a></p>
+            </section>
+            <section class="source-item">
+              <h3>多々羅しまなみ公園 / 多々羅レストラン</h3>
+              <p><a href="https://www.oideya.gr.jp/spot-c/tatara-3/">今治地方観光協会</a></p>
+              <p><a href="https://imabari-shimanami.jp/tatara-restaurant/">レストラン案内</a></p>
+            </section>
+            <section class="source-item">
+              <h3>HAKKOパーク</h3>
+              <p><a href="https://mandahakkopark.com/">公式サイト</a></p>
+              <p><a href="https://www.mandahakko.com/article/shop.html">万田発酵公式案内</a></p>
+            </section>
+            <section class="source-item">
+              <h3>千光寺山ロープウェイ</h3>
+              <p><a href="https://mt-senkoji-rw.jp/fare/service/">公式運行情報</a></p>
+              <p><a href="https://www.city.onomichi.hiroshima.jp/site/onomichikanko/1317.html">尾道市観光情報</a></p>
+            </section>
+            <section class="source-item">
+              <h3>ホテル</h3>
+              <p><a href="https://setouchi.gateauxkingdom.com/">ホテル公式</a></p>
+              <p><a href="https://travel.rakuten.co.jp/HOTEL/164652/164652_std.html">楽天トラベル</a></p>
+            </section>
+          </div>
         </div>
       </article>
     </section>
 
     <p class="footer">このファイルは会話内容に応じて更新する運用を想定しています。</p>
   </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="写真プレビュー">
+      <button class="lightbox-close" type="button" aria-label="閉じる">×</button>
+      <button class="lightbox-nav lightbox-prev" type="button" aria-label="前の写真">‹</button>
+      <img class="lightbox-image" src="" alt="">
+      <button class="lightbox-nav lightbox-next" type="button" aria-label="次の写真">›</button>
+      <div class="lightbox-copy">
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-description"></p>
+      </div>
+    </div>
+  </div>
 
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -514,60 +844,43 @@
     const plans = [
       {
         key: "dolphin",
+        shortLabel: "Plan A",
         label: "ドルフィンファームしまなみ",
+        fullLabel: "Plan A: ドルフィンファームしまなみ",
         color: "#b91c1c",
-        stops: [
-          baseStops.home,
-          baseStops.niihamaIc,
-          baseStops.imabariIc,
-          baseStops.dolphinFarm,
-          baseStops.hakataArea,
-          baseStops.takayaJct,
-          baseStops.hotel
-        ]
+        totalTime: "6時間03分",
+        keyStops: ["ドルフィンファームしまなみ", "マリンオアシスはかた", "シャトレーゼ ガトーキングダム せとうち"],
+        stops: [baseStops.home, baseStops.niihamaIc, baseStops.imabariIc, baseStops.dolphinFarm, baseStops.hakataArea, baseStops.takayaJct, baseStops.hotel]
       },
       {
         key: "tatara",
+        shortLabel: "Plan B",
         label: "多々羅しまなみ公園",
+        fullLabel: "Plan B: 多々羅しまなみ公園",
         color: "#15803d",
-        stops: [
-          baseStops.home,
-          baseStops.niihamaIc,
-          baseStops.imabariIc,
-          baseStops.tataraPark,
-          baseStops.tataraRestaurant,
-          baseStops.takayaJct,
-          baseStops.hotel
-        ]
+        totalTime: "5時間47分",
+        keyStops: ["多々羅しまなみ公園", "多々羅レストラン", "シャトレーゼ ガトーキングダム せとうち"],
+        stops: [baseStops.home, baseStops.niihamaIc, baseStops.imabariIc, baseStops.tataraPark, baseStops.tataraRestaurant, baseStops.takayaJct, baseStops.hotel]
       },
       {
         key: "hakko",
+        shortLabel: "Plan C",
         label: "HAKKOパーク",
+        fullLabel: "Plan C: HAKKOパーク",
         color: "#2563eb",
-        stops: [
-          baseStops.home,
-          baseStops.niihamaIc,
-          baseStops.imabariIc,
-          baseStops.onomichiIc,
-          baseStops.hakkoPark,
-          baseStops.takayaJct,
-          baseStops.hotel
-        ]
+        totalTime: "5時間56分",
+        keyStops: ["HAKKOパーク", "HAKKOパーク内カフェ", "シャトレーゼ ガトーキングダム せとうち"],
+        stops: [baseStops.home, baseStops.niihamaIc, baseStops.imabariIc, baseStops.onomichiIc, baseStops.hakkoPark, baseStops.takayaJct, baseStops.hotel]
       },
       {
         key: "senkoji",
+        shortLabel: "Plan D",
         label: "千光寺山ロープウェイ",
+        fullLabel: "Plan D: 千光寺山ロープウェイ",
         color: "#7c3aed",
-        stops: [
-          baseStops.home,
-          baseStops.niihamaIc,
-          baseStops.imabariIc,
-          baseStops.onomichiIc,
-          baseStops.senkojiRopeway,
-          baseStops.kodaniSa,
-          baseStops.takayaJct,
-          baseStops.hotel
-        ]
+        totalTime: "5時間53分",
+        keyStops: ["千光寺山ロープウェイ", "小谷サービスエリア（下り）", "シャトレーゼ ガトーキングダム せとうち"],
+        stops: [baseStops.home, baseStops.niihamaIc, baseStops.imabariIc, baseStops.onomichiIc, baseStops.senkojiRopeway, baseStops.kodaniSa, baseStops.takayaJct, baseStops.hotel]
       }
     ];
 
@@ -597,34 +910,50 @@
       });
     }
 
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function createPlanPopup(plan, suffix) {
+      const title = suffix ? plan.fullLabel + " " + suffix : plan.fullLabel;
+      return "<div><strong>" + escapeHtml(title) + "</strong><br>主要立ち寄り: " + escapeHtml(plan.keyStops.join(" → ")) + "<br>総所要: " + escapeHtml(plan.totalTime) + "</div>";
+    }
+
     async function fetchDetailedRoute(stops) {
-      const coordinates = stops.map((stop) => `${stop.position.lng},${stop.position.lat}`).join(";");
+      const coordinates = stops.map(function (stop) {
+        return stop.position.lng + "," + stop.position.lat;
+      }).join(";");
       const url = "https://router.project-osrm.org/route/v1/driving/" + coordinates + "?overview=full&geometries=geojson&steps=false";
       const response = await fetch(url, { headers: { Accept: "application/json" } });
       if (!response.ok) throw new Error("Routing service returned an error.");
       const data = await response.json();
       if (!data.routes || !data.routes.length || !data.routes[0].geometry) throw new Error("No route geometry.");
-      return data.routes[0].geometry.coordinates.map(([lng, lat]) => [lat, lng]);
+      return data.routes[0].geometry.coordinates.map(function (pair) {
+        return [pair[1], pair[0]];
+      });
     }
 
     function addMarkers(map, bounds) {
       const unique = new Map();
-      plans.forEach((plan) => {
-        plan.stops.forEach((stop) => {
-          if (!unique.has(stop.name)) unique.set(stop.name, stop);
+      plans.forEach(function (plan) {
+        plan.stops.forEach(function (stop) {
+          if (!unique.has(stop.name)) unique.set(stop.name, { stop: stop, plan: plan });
         });
       });
 
-      Array.from(unique.values()).forEach((stop, index) => {
+      Array.from(unique.values()).forEach(function (entry, index) {
+        const stop = entry.stop;
         const latLng = [stop.position.lat, stop.position.lng];
         bounds.extend(latLng);
         L.marker(latLng, {
           icon: createMarkerIcon(stop.kind, index + 1),
           title: stop.name
-        }).addTo(map).bindPopup(
-          "<div style='font-family:Yu Gothic,Hiragino Sans,sans-serif;line-height:1.6'><strong>" +
-          stop.name + "</strong><br>" + stop.description + "</div>"
-        );
+        }).addTo(map).bindPopup(createPlanPopup(entry.plan, "地点: " + stop.name + " / " + stop.description));
       });
     }
 
@@ -641,7 +970,7 @@
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 18,
-        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
       const bounds = L.latLngBounds([]);
@@ -656,17 +985,24 @@
             color: plan.color,
             weight: 5,
             opacity: 0.75
-          }).addTo(map).bindPopup(plan.label);
-          routeLatLngs.forEach((latLng) => bounds.extend(latLng));
+          }).addTo(map).bindPopup(createPlanPopup(plan, "ルート"));
+          routeLatLngs.forEach(function (latLng) {
+            bounds.extend(latLng);
+          });
         } catch (error) {
           hadRoutingError = true;
-          const fallbackPath = plan.stops.map((stop) => [stop.position.lat, stop.position.lng]);
+          const fallbackPath = plan.stops.map(function (stop) {
+            return [stop.position.lat, stop.position.lng];
+          });
           L.polyline(fallbackPath, {
             color: plan.color,
             weight: 4,
             opacity: 0.35,
             dashArray: "8 10"
-          }).addTo(map).bindPopup(plan.label + "（簡易経路）");
+          }).addTo(map).bindPopup(createPlanPopup(plan, "簡易経路"));
+          fallbackPath.forEach(function (latLng) {
+            bounds.extend(latLng);
+          });
         }
       }
 
@@ -677,10 +1013,191 @@
       map.fitBounds(bounds, { padding: [28, 28] });
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initMap);
-    } else {
+    function initAccordion() {
+      document.querySelectorAll(".accordion-item").forEach(function (item) {
+        const toggle = item.querySelector(".accordion-toggle");
+        if (!toggle) return;
+        toggle.addEventListener("click", function () {
+          const isOpen = item.classList.toggle("is-open");
+          toggle.setAttribute("aria-expanded", String(isOpen));
+        });
+      });
+    }
+
+    function initTabs() {
+      const buttons = Array.from(document.querySelectorAll(".tab-button"));
+      const panels = Array.from(document.querySelectorAll(".timetable-panel"));
+
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          const targetId = button.getAttribute("data-tab-target");
+          buttons.forEach(function (candidate) {
+            const active = candidate === button;
+            candidate.classList.toggle("is-active", active);
+            candidate.setAttribute("aria-selected", String(active));
+          });
+          panels.forEach(function (panel) {
+            const active = panel.id === targetId;
+            panel.classList.toggle("is-active", active);
+            panel.hidden = !active;
+          });
+        });
+      });
+    }
+
+    function toMinutes(value) {
+      const match = String(value).match(/^(\d{2}):(\d{2})$/);
+      if (!match) return Number.MAX_SAFE_INTEGER;
+      return Number(match[1]) * 60 + Number(match[2]);
+    }
+
+    function toDurationMinutes(value) {
+      const match = String(value).match(/(\d+)時間(\d+)分/);
+      if (!match) return Number.MAX_SAFE_INTEGER;
+      return Number(match[1]) * 60 + Number(match[2]);
+    }
+
+    function sortValue(row, key) {
+      const value = row.dataset[key] || "";
+      if (key === "departure" || key === "arrival") return toMinutes(value);
+      if (key === "duration") return toDurationMinutes(value);
+      if (key === "fit") return value === "高" ? 2 : 1;
+      return value;
+    }
+
+    function initComparisonTable() {
+      const table = document.getElementById("comparison-table");
+      const tbody = table ? table.querySelector("tbody") : null;
+      const filterInput = document.getElementById("comparison-filter");
+      if (!table || !tbody || !filterInput) return;
+
+      let currentSort = { key: "plan", direction: 1 };
+
+      function applyFilter() {
+        const term = filterInput.value.trim().toLowerCase();
+        Array.from(tbody.rows).forEach(function (row) {
+          const text = row.textContent.toLowerCase();
+          row.hidden = term ? text.indexOf(term) === -1 : false;
+        });
+      }
+
+      function applySort(key) {
+        currentSort = {
+          key: key,
+          direction: currentSort.key === key ? currentSort.direction * -1 : 1
+        };
+
+        const rows = Array.from(tbody.rows);
+        rows.sort(function (a, b) {
+          const left = sortValue(a, currentSort.key);
+          const right = sortValue(b, currentSort.key);
+          if (left < right) return -1 * currentSort.direction;
+          if (left > right) return 1 * currentSort.direction;
+          return 0;
+        });
+
+        rows.forEach(function (row) {
+          tbody.appendChild(row);
+        });
+
+        table.querySelectorAll("th button").forEach(function (button) {
+          const indicator = button.querySelector(".sort-indicator");
+          const keyName = button.getAttribute("data-sort");
+          if (!indicator) return;
+          indicator.textContent = keyName === currentSort.key ? (currentSort.direction === 1 ? "↑" : "↓") : "⇅";
+        });
+      }
+
+      table.querySelectorAll("th button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          applySort(button.getAttribute("data-sort"));
+          applyFilter();
+        });
+      });
+
+      filterInput.addEventListener("input", applyFilter);
+      applySort("plan");
+      applyFilter();
+    }
+
+    function initLightbox() {
+      const lightbox = document.getElementById("lightbox");
+      const image = lightbox.querySelector(".lightbox-image");
+      const title = document.getElementById("lightbox-title");
+      const description = document.getElementById("lightbox-description");
+      const closeButton = lightbox.querySelector(".lightbox-close");
+      const prevButton = lightbox.querySelector(".lightbox-prev");
+      const nextButton = lightbox.querySelector(".lightbox-next");
+      const cards = Array.from(document.querySelectorAll(".photo-card"));
+      let activeGroup = [];
+      let activeIndex = 0;
+
+      function render() {
+        const item = activeGroup[activeIndex];
+        if (!item) return;
+        image.src = item.getAttribute("data-full");
+        image.alt = item.querySelector("img").alt;
+        title.textContent = item.getAttribute("data-title") || "";
+        description.textContent = item.getAttribute("data-description") || "";
+      }
+
+      function open(card) {
+        const groupName = card.getAttribute("data-lightbox-group");
+        activeGroup = cards.filter(function (item) {
+          return item.getAttribute("data-lightbox-group") === groupName;
+        });
+        activeIndex = activeGroup.indexOf(card);
+        render();
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+      }
+
+      function close() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        image.src = "";
+      }
+
+      function move(step) {
+        if (!activeGroup.length) return;
+        activeIndex = (activeIndex + step + activeGroup.length) % activeGroup.length;
+        render();
+      }
+
+      cards.forEach(function (card) {
+        card.addEventListener("click", function () {
+          open(card);
+        });
+      });
+
+      closeButton.addEventListener("click", close);
+      prevButton.addEventListener("click", function () { move(-1); });
+      nextButton.addEventListener("click", function () { move(1); });
+
+      lightbox.addEventListener("click", function (event) {
+        if (event.target === lightbox) close();
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (!lightbox.classList.contains("is-open")) return;
+        if (event.key === "Escape") close();
+        if (event.key === "ArrowLeft") move(-1);
+        if (event.key === "ArrowRight") move(1);
+      });
+    }
+
+    function initPage() {
+      initAccordion();
+      initTabs();
+      initComparisonTable();
+      initLightbox();
       initMap();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initPage);
+    } else {
+      initPage();
     }
   </script>
 </body>
