@@ -97,9 +97,9 @@
     .plans,
     .sources,
     .notes,
-    .gallery-grid,
-    .gallery-groups,
-    .accordion {
+    .accordion,
+    .spot-links,
+    .spot-link-grid {
       display: grid;
       gap: 14px;
     }
@@ -107,7 +107,7 @@
     .grid { gap: 20px; }
     .facts { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
     .plans { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
-    .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .spot-link-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 
     .section-title {
       font-size: 22px;
@@ -118,9 +118,8 @@
     .plan,
     .source-item,
     .note-box,
-    .photo-card,
     .timetable-panel,
-    .gallery-group {
+    .spot-group {
       background: #fffdf8;
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -131,7 +130,7 @@
     .source-item,
     .note-box,
     .timetable-panel,
-    .gallery-group {
+    .spot-group {
       padding: 16px 18px;
     }
 
@@ -149,7 +148,8 @@
     .plan h3,
     .source-item h3,
     .note-box h3,
-    .gallery-group h3,
+    .spot-group h3,
+    .spot-card h4,
     .timetable-panel h3 {
       font-size: 17px;
       margin-bottom: 8px;
@@ -159,7 +159,8 @@
     .source-item p,
     .note-box p,
     .note-box li,
-    .gallery-group p,
+    .spot-group p,
+    .spot-card p,
     .timetable-panel p {
       line-height: 1.7;
     }
@@ -354,26 +355,20 @@
     .leaflet-popup-content { margin: 12px 14px; line-height: 1.7; }
     .leaflet-popup-content strong { color: var(--accent); }
 
-    .gallery-group { display: grid; gap: 14px; }
-    .gallery-plan-meta { color: var(--muted); font-size: 14px; }
-
-    .photo-card {
-      overflow: hidden;
-      cursor: pointer;
-      background: #fffdf8;
+    .spot-group { display: grid; gap: 14px; }
+    .spot-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
     }
-
-    .photo-card img {
-      display: block;
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background: #e5e7eb;
+    .spot-card h4 { margin: 0 0 8px; }
+    .spot-card p { margin: 0 0 10px; color: var(--muted); }
+    .spot-card a {
+      color: var(--accent);
+      font-weight: 600;
+      word-break: break-all;
     }
-
-    .photo-copy { padding: 14px 16px 16px; }
-    .photo-copy h4 { margin-bottom: 8px; font-size: 16px; }
-    .photo-copy p { line-height: 1.7; color: var(--muted); font-size: 14px; }
 
     .footer {
       margin-top: 18px;
@@ -381,73 +376,6 @@
       font-size: 13px;
       text-align: right;
     }
-
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: rgba(17, 24, 39, 0.78);
-      z-index: 4000;
-    }
-
-    .lightbox.is-open { display: flex; }
-
-    .lightbox-dialog {
-      position: relative;
-      width: min(980px, 100%);
-      max-height: 92vh;
-      background: #fffdf8;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
-    }
-
-    .lightbox-image {
-      width: 100%;
-      max-height: 72vh;
-      object-fit: contain;
-      background: #111827;
-      display: block;
-    }
-
-    .lightbox-copy { padding: 16px 20px 20px; }
-    .lightbox-copy h3 { margin-bottom: 8px; font-size: 20px; }
-    .lightbox-copy p { line-height: 1.7; color: var(--muted); }
-
-    .lightbox-close,
-    .lightbox-nav {
-      position: absolute;
-      border: 0;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      color: #fff;
-      background: rgba(17, 24, 39, 0.7);
-    }
-
-    .lightbox-close {
-      top: 14px;
-      right: 14px;
-      width: 42px;
-      height: 42px;
-      font-size: 24px;
-      line-height: 1;
-    }
-
-    .lightbox-nav {
-      top: 50%;
-      transform: translateY(-50%);
-      width: 46px;
-      height: 46px;
-      font-size: 26px;
-    }
-
-    .lightbox-prev { left: 14px; }
-    .lightbox-next { right: 14px; }
 
     @media (max-width: 860px) {
       .map-layout { grid-template-columns: 1fr; }
@@ -649,107 +577,68 @@
 
       <article class="card accordion-item is-open">
         <button class="accordion-toggle" type="button" aria-expanded="true">
-          <h2 class="section-title">写真</h2>
+          <h2 class="section-title">各スポット公式サイト</h2>
         </button>
         <div class="accordion-body">
-          <div class="gallery-groups">
-            <section class="gallery-group">
+          <div class="spot-links">
+            <section class="spot-group">
               <div>
                 <h3>Plan A</h3>
-                <p class="gallery-plan-meta">ドルフィンファームしまなみと伯方島ランチ周辺のイメージ。</p>
+                <p>ドルフィンファームしまなみとマリンオアシスはかたの公式リンク。</p>
               </div>
-              <div class="gallery-grid">
-                <figure class="photo-card" data-lightbox-group="plan-a" data-full="https://upload.wikimedia.org/wikipedia/commons/a/a3/Hakatacho_Kanoura%2C_Imabari%2C_Ehime_Prefecture_794-2302%2C_Japan_-_panoramio.jpg" data-title="伯方島・鹿浦の海岸" data-description="ドルフィンファームしまなみが立地する伯方島の海岸風景。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Hakatacho_Kanoura%2C_Imabari%2C_Ehime_Prefecture_794-2302%2C_Japan_-_panoramio.jpg" alt="伯方島・鹿浦の海岸" loading="lazy">
-                  <figcaption class="photo-copy"><h4>伯方島・鹿浦海岸</h4><p>ドルフィンファームしまなみが面する伯方島の海岸沿い。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-a" data-full="https://upload.wikimedia.org/wikipedia/commons/e/e8/Hakatajima_%2811564%29.jpg" data-title="伯方島の風景" data-description="しまなみ海道・伯方島の島内風景。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Hakatajima_%2811564%29.jpg" alt="伯方島の風景" loading="lazy">
-                  <figcaption class="photo-copy"><h4>伯方島の島内風景</h4><p>見学後に昼食へ向かう伯方島ののどかな風景。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-a" data-full="https://upload.wikimedia.org/wikipedia/commons/1/10/Hakatajima_%2811749%29.jpg" data-title="伯方島の海" data-description="伯方島周辺の瀬戸内海の眺め。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Hakatajima_%2811749%29.jpg" alt="伯方島の海" loading="lazy">
-                  <figcaption class="photo-copy"><h4>伯方島・瀬戸内海</h4><p>しまなみ海道らしい穏やかな瀬戸内の海景色。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-a" data-full="https://upload.wikimedia.org/wikipedia/commons/4/42/Hakatajima_%2820990%29.jpg" data-title="伯方島ドライブ" data-description="しまなみ海道・伯方島の道路風景。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Hakatajima_%2820990%29.jpg" alt="伯方島ドライブ" loading="lazy">
-                  <figcaption class="photo-copy"><h4>伯方島のドライブ風景</h4><p>立ち寄りと昼食の間をつなぐ島内の景観。</p></figcaption>
-                </figure>
+              <div class="spot-link-grid">
+                <section class="spot-card">
+                  <h4>ドルフィンファームしまなみ</h4>
+                  <p>体験型イルカ施設</p>
+                  <a href="https://dolphin-farm.net/" target="_blank" rel="noopener">https://dolphin-farm.net/</a>
+                </section>
+                <section class="spot-card">
+                  <h4>マリンオアシスはかた</h4>
+                  <p>海の駅・マリンレジャー</p>
+                  <a href="https://marinoasis.jp/" target="_blank" rel="noopener">https://marinoasis.jp/</a>
+                </section>
               </div>
             </section>
 
-            <section class="gallery-group">
+            <section class="spot-group">
               <div>
                 <h3>Plan B</h3>
-                <p class="gallery-plan-meta">多々羅しまなみ公園の景観とレストラン利用をまとめた写真群。</p>
+                <p>多々羅しまなみ公園の公式リンク。</p>
               </div>
-              <div class="gallery-grid">
-                <figure class="photo-card" data-lightbox-group="plan-b" data-full="https://upload.wikimedia.org/wikipedia/commons/f/ff/Michinoeki_Tatara-Shimanami-Park.jpg" data-title="道の駅 多々羅しまなみ公園" data-description="今治市多々羅しまなみ公園（道の駅）の外観。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Michinoeki_Tatara-Shimanami-Park.jpg" alt="道の駅 多々羅しまなみ公園" loading="lazy">
-                  <figcaption class="photo-copy"><h4>道の駅 多々羅しまなみ公園</h4><p>Plan Bの立ち寄り拠点。多々羅大橋を望む展望スポット。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-b" data-full="https://upload.wikimedia.org/wikipedia/commons/3/38/Tatara_Bridge_from_Roadside_Station_%22Imabari_City_Tatara_Shimanami_Park%22_4.jpg" data-title="多々羅大橋（公園より）" data-description="多々羅しまなみ公園から眺めた多々羅大橋。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Tatara_Bridge_from_Roadside_Station_%22Imabari_City_Tatara_Shimanami_Park%22_4.jpg" alt="多々羅大橋（公園より）" loading="lazy">
-                  <figcaption class="photo-copy"><h4>多々羅大橋（公園から）</h4><p>公園から正面に望む世界最大級の斜張橋。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-b" data-full="https://upload.wikimedia.org/wikipedia/commons/e/eb/Tatara_Bridge_from_Ikuchijima.jpg" data-title="多々羅大橋（生口島より）" data-description="生口島側から眺めた多々羅大橋の全景。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Tatara_Bridge_from_Ikuchijima.jpg" alt="多々羅大橋（生口島より）" loading="lazy">
-                  <figcaption class="photo-copy"><h4>多々羅大橋（生口島から）</h4><p>海峡を跨ぐ多々羅大橋の開放的な全景。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-b" data-full="https://upload.wikimedia.org/wikipedia/commons/0/0e/Roadside_Station_%22Imabari_City_Tatara_Shimanami_Park%22_20180429.jpg" data-title="多々羅しまなみ公園 施設" data-description="多々羅しまなみ公園の施設全景（2018年4月撮影）。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Roadside_Station_%22Imabari_City_Tatara_Shimanami_Park%22_20180429.jpg" alt="多々羅しまなみ公園 施設" loading="lazy">
-                  <figcaption class="photo-copy"><h4>多々羅しまなみ公園 施設</h4><p>レストラン・特産品コーナーを備えた道の駅。</p></figcaption>
-                </figure>
+              <div class="spot-link-grid">
+                <section class="spot-card">
+                  <h4>多々羅しまなみ公園（道の駅）</h4>
+                  <p>しまなみ海道の道の駅</p>
+                  <a href="https://www.tatara.or.jp/" target="_blank" rel="noopener">https://www.tatara.or.jp/</a>
+                </section>
               </div>
             </section>
 
-            <section class="gallery-group">
+            <section class="spot-group">
               <div>
                 <h3>Plan C</h3>
-                <p class="gallery-plan-meta">HAKKOパークと施設内カフェを軸にした発酵テーマの写真群。</p>
+                <p>HAKKOパークの公式リンク。</p>
               </div>
-              <div class="gallery-grid">
-                <figure class="photo-card" data-lightbox-group="plan-c" data-full="https://upload.wikimedia.org/wikipedia/commons/3/3c/INNOSHIMA_Island_2005.jpg" data-title="因島（しまなみ海道）" data-description="HAKKOパークが立地する因島の全景（2005年撮影）。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/INNOSHIMA_Island_2005.jpg" alt="因島（しまなみ海道）" loading="lazy">
-                  <figcaption class="photo-copy"><h4>因島（しまなみ海道）</h4><p>HAKKOパーク（万田発酵）が立地するしまなみ海道の因島。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-c" data-full="https://upload.wikimedia.org/wikipedia/commons/f/f2/Innoshima_Bridge_and_Yaegojima_Islands_from_bus_on_Innoshima_Island_2.jpg" data-title="因島大橋と八重子島" data-description="因島島内バスから望む因島大橋と八重子島。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Innoshima_Bridge_and_Yaegojima_Islands_from_bus_on_Innoshima_Island_2.jpg" alt="因島大橋と八重子島" loading="lazy">
-                  <figcaption class="photo-copy"><h4>因島大橋と八重子島</h4><p>HAKKOパーク周辺・因島の橋と島々の景色。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-c" data-full="https://upload.wikimedia.org/wikipedia/commons/5/52/Innoshima_286.jpg" data-title="因島の風景" data-description="因島島内の風景。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Innoshima_286.jpg" alt="因島の風景" loading="lazy">
-                  <figcaption class="photo-copy"><h4>因島の風景</h4><p>発酵テーマのHAKKOパークが佇む因島の自然風景。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-c" data-full="https://upload.wikimedia.org/wikipedia/commons/5/5d/Innoshima_344.jpg" data-title="因島の海" data-description="因島周辺の瀬戸内海の眺め。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Innoshima_344.jpg" alt="因島の海" loading="lazy">
-                  <figcaption class="photo-copy"><h4>因島・瀬戸内海</h4><p>HAKKOパーク見学後に昼食カフェへ向かう因島の海景。</p></figcaption>
-                </figure>
+              <div class="spot-link-grid">
+                <section class="spot-card">
+                  <h4>HAKKOパーク（万田発酵）</h4>
+                  <p>発酵体験テーマパーク</p>
+                  <a href="https://mandahakkopark.com/" target="_blank" rel="noopener">https://mandahakkopark.com/</a>
+                </section>
               </div>
             </section>
 
-            <section class="gallery-group">
+            <section class="spot-group">
               <div>
                 <h3>Plan D</h3>
-                <p class="gallery-plan-meta">尾道景観と小谷サービスエリアの昼食を組み合わせた写真群。</p>
+                <p>千光寺山ロープウェイの公式リンク。</p>
               </div>
-              <div class="gallery-grid">
-                <figure class="photo-card" data-lightbox-group="plan-d" data-full="https://upload.wikimedia.org/wikipedia/commons/8/8e/Senkojiyama_ropeway01n3200.jpg" data-title="千光寺山ロープウェイ" data-description="尾道・千光寺山ロープウェイ。山頂駅と麓をつなぐ約3分の空中散歩。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Senkojiyama_ropeway01n3200.jpg" alt="千光寺山ロープウェイ" loading="lazy">
-                  <figcaption class="photo-copy"><h4>千光寺山ロープウェイ</h4><p>尾道市街と瀬戸内海を一望できる約3分の空中散歩。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-d" data-full="https://upload.wikimedia.org/wikipedia/commons/1/1c/Senkojiyama_ropeway02n3872.jpg" data-title="千光寺山ロープウェイ ゴンドラ" data-description="千光寺山ロープウェイのゴンドラ。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Senkojiyama_ropeway02n3872.jpg" alt="千光寺山ロープウェイ ゴンドラ" loading="lazy">
-                  <figcaption class="photo-copy"><h4>ロープウェイゴンドラ</h4><p>山頂へ向かうゴンドラから尾道の街並みが広がる。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-d" data-full="https://upload.wikimedia.org/wikipedia/commons/7/76/Onomichi_Channel_and_Mukaishima_Island_from_Senkoji_Park_3.jpg" data-title="千光寺公園からの眺望" data-description="千光寺公園から望む尾道水道と向島。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Onomichi_Channel_and_Mukaishima_Island_from_Senkoji_Park_3.jpg" alt="千光寺公園からの眺望" loading="lazy">
-                  <figcaption class="photo-copy"><h4>千光寺公園から尾道水道</h4><p>山頂から見渡す尾道水道と向島の絶景。</p></figcaption>
-                </figure>
-                <figure class="photo-card" data-lightbox-group="plan-d" data-full="https://upload.wikimedia.org/wikipedia/commons/2/2c/View_from_Senkoji_Park_Top_Observation_Deck_%28northwest%29.jpg" data-title="千光寺公園 展望台（北西方向）" data-description="千光寺公園頂上展望台から北西方向の眺め。（© Wikimedia Commons）">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/View_from_Senkoji_Park_Top_Observation_Deck_%28northwest%29.jpg" alt="千光寺公園 展望台（北西方向）" loading="lazy">
-                  <figcaption class="photo-copy"><h4>展望台からのパノラマ</h4><p>山頂展望台から望む尾道の市街地と瀬戸内海。</p></figcaption>
-                </figure>
+              <div class="spot-link-grid">
+                <section class="spot-card">
+                  <h4>千光寺山ロープウェイ</h4>
+                  <p>尾道の観光ロープウェイ</p>
+                  <a href="https://mt-senkoji-rw.jp/" target="_blank" rel="noopener">https://mt-senkoji-rw.jp/</a>
+                </section>
               </div>
             </section>
           </div>
@@ -805,19 +694,6 @@
 
     <p class="footer">このファイルは会話内容に応じて更新する運用を想定しています。</p>
   </main>
-
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="写真プレビュー">
-      <button class="lightbox-close" type="button" aria-label="閉じる">×</button>
-      <button class="lightbox-nav lightbox-prev" type="button" aria-label="前の写真">‹</button>
-      <img class="lightbox-image" src="" alt="">
-      <button class="lightbox-nav lightbox-next" type="button" aria-label="次の写真">›</button>
-      <div class="lightbox-copy">
-        <h3 id="lightbox-title"></h3>
-        <p id="lightbox-description"></p>
-      </div>
-    </div>
-  </div>
 
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -1120,77 +996,10 @@
       applyFilter();
     }
 
-    function initLightbox() {
-      const lightbox = document.getElementById("lightbox");
-      const image = lightbox.querySelector(".lightbox-image");
-      const title = document.getElementById("lightbox-title");
-      const description = document.getElementById("lightbox-description");
-      const closeButton = lightbox.querySelector(".lightbox-close");
-      const prevButton = lightbox.querySelector(".lightbox-prev");
-      const nextButton = lightbox.querySelector(".lightbox-next");
-      const cards = Array.from(document.querySelectorAll(".photo-card"));
-      let activeGroup = [];
-      let activeIndex = 0;
-
-      function render() {
-        const item = activeGroup[activeIndex];
-        if (!item) return;
-        image.src = item.getAttribute("data-full");
-        image.alt = item.querySelector("img").alt;
-        title.textContent = item.getAttribute("data-title") || "";
-        description.textContent = item.getAttribute("data-description") || "";
-      }
-
-      function open(card) {
-        const groupName = card.getAttribute("data-lightbox-group");
-        activeGroup = cards.filter(function (item) {
-          return item.getAttribute("data-lightbox-group") === groupName;
-        });
-        activeIndex = activeGroup.indexOf(card);
-        render();
-        lightbox.classList.add("is-open");
-        lightbox.setAttribute("aria-hidden", "false");
-      }
-
-      function close() {
-        lightbox.classList.remove("is-open");
-        lightbox.setAttribute("aria-hidden", "true");
-        image.src = "";
-      }
-
-      function move(step) {
-        if (!activeGroup.length) return;
-        activeIndex = (activeIndex + step + activeGroup.length) % activeGroup.length;
-        render();
-      }
-
-      cards.forEach(function (card) {
-        card.addEventListener("click", function () {
-          open(card);
-        });
-      });
-
-      closeButton.addEventListener("click", close);
-      prevButton.addEventListener("click", function () { move(-1); });
-      nextButton.addEventListener("click", function () { move(1); });
-
-      lightbox.addEventListener("click", function (event) {
-        if (event.target === lightbox) close();
-      });
-
-      document.addEventListener("keydown", function (event) {
-        if (!lightbox.classList.contains("is-open")) return;
-        if (event.key === "Escape") close();
-        if (event.key === "ArrowLeft") move(-1);
-        if (event.key === "ArrowRight") move(1);
-      });
-    }
-
     function initPage() {
       initAccordion();
       initTabs();
       initComparisonTable();
-      initLightbox();
       initMap();
     }
 
