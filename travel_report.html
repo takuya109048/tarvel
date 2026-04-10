@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Travel Report</title>
   <link
     rel="stylesheet"
@@ -438,6 +438,139 @@
       .timetable-place {
         width: 100%;
         justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        overflow-x: hidden;
+        font-size: 14px;
+      }
+
+      img,
+      iframe,
+      table,
+      .wrap,
+      .hero,
+      .card,
+      .fact,
+      .plan,
+      .source-item,
+      .note-box,
+      .timetable-panel,
+      .spot-group,
+      .spot-card,
+      #map,
+      .map-layout,
+      .table-wrap,
+      .timetable-table-wrap {
+        max-width: 100%;
+      }
+
+      .wrap {
+        width: min(100% - 20px, 1120px);
+        margin: 20px auto 40px;
+      }
+
+      .hero,
+      .card {
+        padding: 16px;
+        border-radius: 18px;
+      }
+
+      .sub,
+      .plan p,
+      .source-item p,
+      .note-box p,
+      .note-box li,
+      .spot-group p,
+      .spot-card p,
+      .timetable-panel p,
+      .note,
+      .value {
+        font-size: 14px;
+      }
+
+      .toolbar {
+        align-items: stretch;
+      }
+
+      .tab-list {
+        flex-wrap: wrap;
+      }
+
+      button,
+      .tab-button,
+      .accordion-toggle,
+      th button,
+      input,
+      select,
+      textarea {
+        min-height: 44px;
+      }
+
+      .tab-button,
+      .accordion-toggle,
+      th button {
+        display: flex;
+        align-items: center;
+      }
+
+      .tab-button {
+        flex: 1 1 calc(50% - 10px);
+        justify-content: center;
+        padding: 10px 14px;
+      }
+
+      .accordion-toggle {
+        padding: 4px 0;
+      }
+
+      .accordion-toggle::after {
+        width: 44px;
+        height: 44px;
+      }
+
+      a {
+        display: inline-block;
+        max-width: 100%;
+        padding: 10px 0;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+
+      .spot-link-grid,
+      .spot-links {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-input,
+      .toolbar input,
+      .toolbar button,
+      .toolbar select,
+      .toolbar textarea {
+        width: 100%;
+      }
+
+      .table-wrap,
+      .timetable-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      table {
+        min-width: 640px;
+      }
+
+      .timetable-table {
+        min-width: 640px;
+      }
+
+      #map,
+      .map,
+      iframe {
+        height: 300px;
+        min-height: 300px;
       }
     }
   </style>
