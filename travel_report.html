@@ -22,11 +22,13 @@
       --safe: #0f766e;
       --warn: #b45309;
       --stop: #2563eb;
+      --red: #b91c1c;
+      --green: #15803d;
+      --blue: #2563eb;
+      --purple: #7c3aed;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -37,9 +39,7 @@
         linear-gradient(180deg, #f6efe6 0%, var(--bg) 100%);
     }
 
-    a {
-      color: var(--accent);
-    }
+    a { color: var(--accent); }
 
     .wrap {
       width: min(1120px, calc(100% - 32px));
@@ -59,16 +59,9 @@
       margin-bottom: 20px;
     }
 
-    .card {
-      padding: 24px;
-    }
+    .card { padding: 24px; }
 
-    h1,
-    h2,
-    h3,
-    p {
-      margin: 0;
-    }
+    h1, h2, h3, p { margin: 0; }
 
     h1 {
       font-size: clamp(28px, 5vw, 44px);
@@ -98,16 +91,7 @@
       font-weight: 700;
     }
 
-    .grid {
-      display: grid;
-      gap: 20px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      margin-bottom: 16px;
-    }
-
+    .grid,
     .facts,
     .plans,
     .sources,
@@ -117,12 +101,14 @@
       gap: 14px;
     }
 
-    .facts {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
+    .grid { gap: 20px; }
 
-    .gallery {
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    .facts { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .gallery { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 16px;
     }
 
     .fact,
@@ -215,9 +201,7 @@
       z-index: 500;
     }
 
-    .photo-card {
-      overflow: hidden;
-    }
+    .photo-card { overflow: hidden; }
 
     .photo-card img {
       display: block;
@@ -248,13 +232,8 @@
     }
 
     @media (max-width: 860px) {
-      .map-layout {
-        grid-template-columns: 1fr;
-      }
-
-      #map {
-        min-height: 420px;
-      }
+      .map-layout { grid-template-columns: 1fr; }
+      #map { min-height: 420px; }
     }
   </style>
 </head>
@@ -265,7 +244,7 @@
       <p class="sub">
         2026年4月12日出発、4月13日帰宅の旅行レポートです。
         出発地は愛媛県新居浜市庄内町5丁目9-20、目的地はシャトレーゼ ガトーキングダム せとうち。
-        到着は 14:30 ごろを狙い、早着しすぎないことを前提に整理しています。
+        到着は14:30ごろを狙い、早着しすぎないことを前提に整理しています。
       </p>
       <div class="meta">
         <span class="chip">出発: 2026-04-12</span>
@@ -313,7 +292,7 @@
           </div>
         </div>
         <p class="note">
-          食事は立ち寄りの前後を固定しません。各プランで 12時ごろに入りやすい店を選び、最後は 14:25-14:30 でホテルに入る運用です。
+          食事は立ち寄りの前後を固定しません。各プランで12時ごろに入りやすい店を選び、最後は14:25-14:30でホテルに入る運用です。
         </p>
       </article>
 
@@ -324,22 +303,25 @@
             <h3>プランA: ドルフィンファームしまなみ</h3>
             <p>立ち寄り: ドルフィンファームしまなみ</p>
             <p>昼食: 道の駅 伯方S・Cパーク マリンオアシスはかた</p>
-            <p>特徴: 立ち寄り位置が早め。昼食はその後で取る構成です。</p>
             <p>組みやすさ: 中</p>
           </section>
           <section class="plan">
             <h3>プランB: 多々羅しまなみ公園</h3>
             <p>立ち寄り: 多々羅しまなみ公園</p>
             <p>昼食: 多々羅レストラン</p>
-            <p>特徴: 立ち寄りと昼食を同じ場所周辺でまとめやすいです。</p>
             <p>組みやすさ: 高</p>
           </section>
           <section class="plan">
             <h3>プランC: HAKKOパーク</h3>
             <p>立ち寄り: HAKKOパーク</p>
             <p>昼食: HAKKOパーク内カフェ</p>
-            <p>特徴: 尾道側で完結しやすく、千光寺代替として扱いやすいです。</p>
             <p>組みやすさ: 高</p>
+          </section>
+          <section class="plan">
+            <h3>プランD: 千光寺山ロープウェイ</h3>
+            <p>立ち寄り: 千光寺山ロープウェイを軽く往復</p>
+            <p>昼食: 小谷サービスエリア（下り）</p>
+            <p>組みやすさ: 中</p>
           </section>
         </div>
       </article>
@@ -379,6 +361,16 @@
             <p>14:26 ホテル到着見込み</p>
           </section>
 
+          <section class="plan safe">
+            <h3>プランD: 千光寺山ロープウェイ</h3>
+            <p>08:35 出発</p>
+            <p>10:50 千光寺山ロープウェイ周辺 到着</p>
+            <p>10:50-11:55 軽く往復</p>
+            <p>12:25 小谷サービスエリア（下り） 到着</p>
+            <p>12:25-13:25 昼食</p>
+            <p>14:28 ホテル到着見込み</p>
+          </section>
+
           <section class="plan warn">
             <h3>運用メモ</h3>
             <p>どのプランも 14:30 に対して数分の余裕で合わせています。</p>
@@ -402,27 +394,15 @@
             </section>
             <section class="note-box">
               <h3>描画中のルート</h3>
-              <p>地図上には 3プランすべての車ルートを重ねて表示しています。</p>
-              <p>ドルフィンファームしまなみ、多々羅しまなみ公園、HAKKOパークを色分けしています。</p>
-            </section>
-            <section class="note-box">
-              <h3>通過順</h3>
-              <ul>
-                <li>出発地</li>
-                <li>新居浜IC</li>
-                <li>今治IC</li>
-                <li>各プランごとの立ち寄り先</li>
-                <li>各プランごとの昼食地点</li>
-                <li>高屋JCT</li>
-                <li>ホテル</li>
-              </ul>
+              <p>地図上には 4プランすべての車ルートを重ねて表示しています。</p>
             </section>
             <section class="note-box">
               <h3>色分け</h3>
               <ul>
-                <li>赤: ドルフィンファームしまなみプラン</li>
-                <li>緑: 多々羅しまなみ公園プラン</li>
-                <li>青: HAKKOパークプラン</li>
+                <li>赤: ドルフィンファームしまなみ</li>
+                <li>緑: 多々羅しまなみ公園</li>
+                <li>青: HAKKOパーク</li>
+                <li>紫: 千光寺山ロープウェイ</li>
               </ul>
             </section>
           </div>
@@ -436,14 +416,14 @@
             <img src="https://tabetainjya.com/img/1910/kodani19.jpg" alt="小谷サービスエリア下りの外観" loading="lazy">
             <figcaption class="photo-copy">
               <h3>小谷サービスエリア（下り）</h3>
-              <p>広島側で時間調整しやすい代表候補です。</p>
+              <p>千光寺プランでの昼食地点です。</p>
             </figcaption>
           </figure>
           <figure class="photo-card">
             <img src="https://tabetainjya.com/img/1910/kodani05.jpg" alt="小谷サービスエリアのフードコート" loading="lazy">
             <figcaption class="photo-copy">
               <h3>フードコート</h3>
-              <p>広島側プランでの昼食候補イメージです。</p>
+              <p>広島側プランの昼食候補イメージです。</p>
             </figcaption>
           </figure>
           <figure class="photo-card">
@@ -473,30 +453,30 @@
             <p><a href="https://www.navitime.co.jp/highway/route/searchlist?arvIcId=403120&arvIcType=ic&depIcId=47040&depIcType=ic">NAVITIME</a></p>
             <p><a href="https://www.atis.co.jp/route/result/1383-2177/">ATIS</a></p>
           </section>
-
           <section class="source-item">
             <h3>ドルフィンファームしまなみ</h3>
             <p><a href="https://www.df-shimanami.com/access/">公式アクセス</a></p>
             <p><a href="https://www.df-shimanami.com/facility_information/">公式施設案内</a></p>
           </section>
-
           <section class="source-item">
             <h3>マリンオアシスはかた</h3>
             <p><a href="https://www.ononavi.jp/brand/detail.html?detail_id=828">尾道観光情報</a></p>
           </section>
-
           <section class="source-item">
             <h3>多々羅しまなみ公園 / 多々羅レストラン</h3>
             <p><a href="https://www.oideya.gr.jp/spot-c/tatara-3/">今治地方観光協会</a></p>
             <p><a href="https://imabari-shimanami.jp/tatara-restaurant/">レストラン案内</a></p>
           </section>
-
           <section class="source-item">
             <h3>HAKKOパーク</h3>
             <p><a href="https://mandahakkopark.com/">公式サイト</a></p>
             <p><a href="https://www.mandahakko.com/article/shop.html">万田発酵公式案内</a></p>
           </section>
-
+          <section class="source-item">
+            <h3>千光寺山ロープウェイ</h3>
+            <p><a href="https://mt-senkoji-rw.jp/fare/service/">公式運行情報</a></p>
+            <p><a href="https://www.city.onomichi.hiroshima.jp/site/onomichikanko/1317.html">尾道市観光情報</a></p>
+          </section>
           <section class="source-item">
             <h3>ホテル</h3>
             <p><a href="https://setouchi.gateauxkingdom.com/">ホテル公式</a></p>
@@ -519,12 +499,14 @@
       home: { name: "出発地", position: { lat: 33.9579, lng: 133.2837 }, kind: "start", description: "愛媛県新居浜市庄内町5丁目9-20" },
       niihamaIc: { name: "新居浜IC", position: { lat: 33.9303, lng: 133.3326 }, kind: "via", description: "高速流入地点" },
       imabariIc: { name: "今治IC", position: { lat: 34.0430, lng: 132.9970 }, kind: "via", description: "しまなみ海道側の主要通過点" },
-      hakataArea: { name: "マリンオアシスはかた", position: { lat: 34.2138, lng: 133.0724 }, kind: "meal", description: "プランAの昼食地点" },
       dolphinFarm: { name: "ドルフィンファームしまなみ", position: { lat: 34.2148, lng: 133.1075 }, kind: "stop", description: "プランAの立ち寄り地点" },
+      hakataArea: { name: "マリンオアシスはかた", position: { lat: 34.2138, lng: 133.0724 }, kind: "meal", description: "プランAの昼食地点" },
       tataraPark: { name: "多々羅しまなみ公園", position: { lat: 34.2439, lng: 132.9968 }, kind: "stop", description: "プランBの立ち寄り地点" },
       tataraRestaurant: { name: "多々羅レストラン", position: { lat: 34.2436, lng: 132.9975 }, kind: "meal", description: "プランBの昼食地点" },
       onomichiIc: { name: "尾道IC", position: { lat: 34.3913, lng: 133.1706 }, kind: "via", description: "尾道側の主要分岐" },
-      hakkoPark: { name: "HAKKOパーク", position: { lat: 34.3369, lng: 133.2207 }, kind: "stop", description: "プランCの立ち寄り地点と昼食地点" },
+      hakkoPark: { name: "HAKKOパーク", position: { lat: 34.3369, lng: 133.2207 }, kind: "stop", description: "プランCの立ち寄り地点" },
+      senkojiRopeway: { name: "千光寺山ロープウェイ", position: { lat: 34.4084, lng: 133.1985 }, kind: "stop", description: "プランDの立ち寄り地点" },
+      kodaniSa: { name: "小谷サービスエリア（下り）", position: { lat: 34.4265, lng: 132.7934 }, kind: "meal", description: "プランDの昼食地点" },
       takayaJct: { name: "高屋JCT", position: { lat: 34.4261, lng: 132.7943 }, kind: "via", description: "東広島呉道路方面への主要分岐" },
       hotel: { name: "目的地", position: { lat: 34.2701, lng: 132.8127 }, kind: "goal", description: "シャトレーゼ ガトーキングダム せとうち" }
     };
@@ -532,7 +514,7 @@
     const plans = [
       {
         key: "dolphin",
-        label: "ドルフィンファームしまなみプラン",
+        label: "ドルフィンファームしまなみ",
         color: "#b91c1c",
         stops: [
           baseStops.home,
@@ -546,7 +528,7 @@
       },
       {
         key: "tatara",
-        label: "多々羅しまなみ公園プラン",
+        label: "多々羅しまなみ公園",
         color: "#15803d",
         stops: [
           baseStops.home,
@@ -560,7 +542,7 @@
       },
       {
         key: "hakko",
-        label: "HAKKOパークプラン",
+        label: "HAKKOパーク",
         color: "#2563eb",
         stops: [
           baseStops.home,
@@ -568,6 +550,21 @@
           baseStops.imabariIc,
           baseStops.onomichiIc,
           baseStops.hakkoPark,
+          baseStops.takayaJct,
+          baseStops.hotel
+        ]
+      },
+      {
+        key: "senkoji",
+        label: "千光寺山ロープウェイ",
+        color: "#7c3aed",
+        stops: [
+          baseStops.home,
+          baseStops.niihamaIc,
+          baseStops.imabariIc,
+          baseStops.onomichiIc,
+          baseStops.senkojiRopeway,
+          baseStops.kodaniSa,
           baseStops.takayaJct,
           baseStops.hotel
         ]
@@ -611,16 +608,14 @@
     }
 
     function addMarkers(map, bounds) {
-      const seen = new Map();
+      const unique = new Map();
       plans.forEach((plan) => {
         plan.stops.forEach((stop) => {
-          if (!seen.has(stop.name)) {
-            seen.set(stop.name, stop);
-          }
+          if (!unique.has(stop.name)) unique.set(stop.name, stop);
         });
       });
 
-      Array.from(seen.values()).forEach((stop, index) => {
+      Array.from(unique.values()).forEach((stop, index) => {
         const latLng = [stop.position.lat, stop.position.lng];
         bounds.extend(latLng);
         L.marker(latLng, {
@@ -646,7 +641,7 @@
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 18,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'
       }).addTo(map);
 
       const bounds = L.latLngBounds([]);
