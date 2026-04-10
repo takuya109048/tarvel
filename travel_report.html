@@ -321,6 +321,13 @@
       color: var(--accent);
     }
 
+    .timetable-duration {
+      margin-left: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
     .map-layout {
       display: grid;
       grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
@@ -483,21 +490,21 @@
             <h3>Plan A: ドルフィンファームしまなみ</h3>
             <p>立ち寄り見学と伯方島ランチを挟み、14:28 到着を狙う構成です。</p>
             <div class="timetable-list">
-              <div class="timetable-row"><div class="timetable-time">08:25</div><div>出発</div></div>
-              <div class="timetable-row"><div class="timetable-time">08:25-09:31</div><div>自宅 → 新居浜IC → 今治IC 移動中（一般道で高速入口へ移動後、松山自動車道・今治小松自動車道）</div></div>
-              <div class="timetable-row"><div class="timetable-time">09:31</div><div>今治IC 通過見込み</div></div>
-              <div class="timetable-row"><div class="timetable-time">09:31-10:05</div><div>今治IC → 来島海峡大橋 → 伯方島IC方面 → ドルフィンファームしまなみ 移動中（しまなみ海道・一般道）</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:05</div><div>ドルフィンファームしまなみ 到着</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:05-10:45</div><div>見学</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:45-10:55</div><div>駐車場へ戻る・乗車準備・施設出発</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:55-11:35</div><div>ドルフィンファームしまなみ → 道の駅 伯方S・Cパーク マリンオアシスはかた 移動中（伯方島内の一般道）</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:35-11:40</div><div>駐車・店内へ徒歩移動・昼食準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:40</div><div>道の駅 伯方S・Cパーク マリンオアシスはかた 到着</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:40-12:40</div><div>昼食</div></div>
-              <div class="timetable-row"><div class="timetable-time">12:40-12:50</div><div>会計・トイレ休憩・駐車場へ徒歩移動・出発準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">12:50-14:15</div><div>道の駅 伯方S・Cパーク マリンオアシスはかた → 伯方島IC → しまなみ海道 → 高屋JCT方面 → ホテル方面 移動中（一般道・しまなみ海道・山陽自動車道・東広島呉道路）</div></div>
-              <div class="timetable-row"><div class="timetable-time">14:15-14:28</div><div>ホテル周辺の一般道へ流出・駐車場進入・荷物を整えてチェックイン動線へ移動</div></div>
-              <div class="timetable-row"><div class="timetable-time">14:28</div><div>ホテル到着見込み</div></div>
+              <div class="timetable-row"><div class="timetable-time">08:25</div><div>出発<span class="timetable-duration">(-)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">08:25-09:31</div><div>自宅 → 新居浜IC → 今治IC 移動中（一般道で高速入口へ移動後、松山自動車道・今治小松自動車道）<span class="timetable-duration">(66分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">09:31</div><div>今治IC 通過見込み<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">09:31-10:05</div><div>今治IC → 来島海峡大橋 → 伯方島IC方面 → ドルフィンファームしまなみ 移動中（しまなみ海道・一般道）<span class="timetable-duration">(34分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:05</div><div>ドルフィンファームしまなみ 到着<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:05-10:45</div><div>見学<span class="timetable-duration">(40分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:45-10:55</div><div>駐車場へ戻る・乗車準備・施設出発<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:55-11:35</div><div>ドルフィンファームしまなみ → 道の駅 伯方S・Cパーク マリンオアシスはかた 移動中（伯方島内の一般道）<span class="timetable-duration">(40分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:35-11:40</div><div>駐車・店内へ徒歩移動・昼食準備<span class="timetable-duration">(5分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:40</div><div>道の駅 伯方S・Cパーク マリンオアシスはかた 到着<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:40-12:40</div><div>昼食<span class="timetable-duration">(60分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">12:40-12:50</div><div>会計・トイレ休憩・駐車場へ徒歩移動・出発準備<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">12:50-14:15</div><div>道の駅 伯方S・Cパーク マリンオアシスはかた → 伯方島IC → しまなみ海道 → 高屋JCT方面 → ホテル方面 移動中（一般道・しまなみ海道・山陽自動車道・東広島呉道路）<span class="timetable-duration">(85分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">14:15-14:28</div><div>ホテル周辺の一般道へ流出・駐車場進入・荷物を整えてチェックイン動線へ移動<span class="timetable-duration">(13分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">14:28</div><div>ホテル到着見込み<span class="timetable-duration">(0分)</span></div></div>
             </div>
           </section>
 
@@ -505,21 +512,21 @@
             <h3>Plan B: 多々羅しまなみ公園</h3>
             <p>散策時間を短めに抑え、多々羅レストランに 11:55 で入る組みやすいプランです。</p>
             <div class="timetable-list">
-              <div class="timetable-row"><div class="timetable-time">08:40</div><div>出発</div></div>
-              <div class="timetable-row"><div class="timetable-time">08:40-09:46</div><div>自宅 → 新居浜IC → 今治IC 移動中（一般道で高速入口へ移動後、松山自動車道・今治小松自動車道）</div></div>
-              <div class="timetable-row"><div class="timetable-time">09:46</div><div>今治IC 通過見込み</div></div>
-              <div class="timetable-row"><div class="timetable-time">09:46-10:35</div><div>今治IC → 来島海峡大橋 → 大三島IC方面 → 多々羅しまなみ公園 移動中（しまなみ海道・一般道）</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:35</div><div>多々羅しまなみ公園 到着</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:35-11:10</div><div>散策</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:10-11:20</div><div>駐車場へ戻る・展望エリアから徒歩移動・休憩</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:20-11:50</div><div>多々羅しまなみ公園 園内移動・売店周辺で時間調整・多々羅レストラン入店待機</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:50-11:55</div><div>駐車・降車・店内へ徒歩移動</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:55</div><div>多々羅レストラン 到着</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:55-12:55</div><div>昼食</div></div>
-              <div class="timetable-row"><div class="timetable-time">12:55-13:05</div><div>会計・トイレ休憩・車へ戻って出発準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">13:05-14:15</div><div>多々羅レストラン → 大三島IC → しまなみ海道 → 高屋JCT方面 → ホテル方面 移動中（一般道・しまなみ海道・山陽自動車道・東広島呉道路）</div></div>
-              <div class="timetable-row"><div class="timetable-time">14:15-14:27</div><div>高速流出後にホテル周辺の一般道へ移動・駐車・降車準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">14:27</div><div>ホテル到着見込み</div></div>
+              <div class="timetable-row"><div class="timetable-time">08:40</div><div>出発<span class="timetable-duration">(-)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">08:40-09:46</div><div>自宅 → 新居浜IC → 今治IC 移動中（一般道で高速入口へ移動後、松山自動車道・今治小松自動車道）<span class="timetable-duration">(66分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">09:46</div><div>今治IC 通過見込み<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">09:46-10:35</div><div>今治IC → 来島海峡大橋 → 大三島IC方面 → 多々羅しまなみ公園 移動中（しまなみ海道・一般道）<span class="timetable-duration">(49分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:35</div><div>多々羅しまなみ公園 到着<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:35-11:10</div><div>散策<span class="timetable-duration">(35分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:10-11:20</div><div>駐車場へ戻る・展望エリアから徒歩移動・休憩<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:20-11:50</div><div>多々羅しまなみ公園 園内移動・売店周辺で時間調整・多々羅レストラン入店待機<span class="timetable-duration">(30分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:50-11:55</div><div>駐車・降車・店内へ徒歩移動<span class="timetable-duration">(5分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55</div><div>多々羅レストラン 到着<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55-12:55</div><div>昼食<span class="timetable-duration">(60分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">12:55-13:05</div><div>会計・トイレ休憩・車へ戻って出発準備<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">13:05-14:15</div><div>多々羅レストラン → 大三島IC → しまなみ海道 → 高屋JCT方面 → ホテル方面 移動中（一般道・しまなみ海道・山陽自動車道・東広島呉道路）<span class="timetable-duration">(70分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">14:15-14:27</div><div>高速流出後にホテル周辺の一般道へ移動・駐車・降車準備<span class="timetable-duration">(12分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">14:27</div><div>ホテル到着見込み<span class="timetable-duration">(0分)</span></div></div>
             </div>
           </section>
 
@@ -527,19 +534,19 @@
             <h3>Plan C: HAKKOパーク</h3>
             <p>尾道側へ寄りながら発酵テーマの見学と施設内カフェで昼食を完結させます。</p>
             <div class="timetable-list">
-              <div class="timetable-row"><div class="timetable-time">08:30</div><div>出発</div></div>
-              <div class="timetable-row"><div class="timetable-time">08:30-10:20</div><div>自宅 → 新居浜IC → 今治IC → 尾道IC方面 → HAKKOパーク 移動中（一般道・松山自動車道・今治小松自動車道・しまなみ海道・一般道）</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:20</div><div>HAKKOパーク 到着</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:20-11:05</div><div>見学</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:05-11:15</div><div>展示エリアからカフェ側へ徒歩移動・手洗い・休憩</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:15-11:50</div><div>施設内で物販確認・ベンチ休憩・昼食開始時刻まで待機</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:50-11:55</div><div>カフェ前へ移動・入店準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:55</div><div>HAKKOパーク内カフェ 到着</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:55-12:55</div><div>昼食</div></div>
-              <div class="timetable-row"><div class="timetable-time">12:55-13:05</div><div>会計・売店立ち寄り・駐車場へ戻って出発準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">13:05-14:15</div><div>HAKKOパーク → 尾道IC方面 → 高屋JCT方面 → ホテル方面 移動中（一般道・山陽自動車道・東広島呉道路）</div></div>
-              <div class="timetable-row"><div class="timetable-time">14:15-14:26</div><div>高速流出後にホテル周辺の一般道へ移動・駐車・荷物整理</div></div>
-              <div class="timetable-row"><div class="timetable-time">14:26</div><div>ホテル到着見込み</div></div>
+              <div class="timetable-row"><div class="timetable-time">08:30</div><div>出発<span class="timetable-duration">(-)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">08:30-10:20</div><div>自宅 → 新居浜IC → 今治IC → 尾道IC方面 → HAKKOパーク 移動中（一般道・松山自動車道・今治小松自動車道・しまなみ海道・一般道）<span class="timetable-duration">(110分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:20</div><div>HAKKOパーク 到着<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:20-11:05</div><div>見学<span class="timetable-duration">(45分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:05-11:15</div><div>展示エリアからカフェ側へ徒歩移動・手洗い・休憩<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:15-11:50</div><div>施設内で物販確認・ベンチ休憩・昼食開始時刻まで待機<span class="timetable-duration">(35分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:50-11:55</div><div>カフェ前へ移動・入店準備<span class="timetable-duration">(5分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55</div><div>HAKKOパーク内カフェ 到着<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55-12:55</div><div>昼食<span class="timetable-duration">(60分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">12:55-13:05</div><div>会計・売店立ち寄り・駐車場へ戻って出発準備<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">13:05-14:15</div><div>HAKKOパーク → 尾道IC方面 → 高屋JCT方面 → ホテル方面 移動中（一般道・山陽自動車道・東広島呉道路）<span class="timetable-duration">(70分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">14:15-14:26</div><div>高速流出後にホテル周辺の一般道へ移動・駐車・荷物整理<span class="timetable-duration">(11分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">14:26</div><div>ホテル到着見込み<span class="timetable-duration">(0分)</span></div></div>
             </div>
           </section>
 
@@ -547,19 +554,19 @@
             <h3>Plan D: 千光寺山ロープウェイ</h3>
             <p>尾道の景観を軽く回収してから、小谷サービスエリアで昼食を取る広島側寄りの構成です。</p>
             <div class="timetable-list">
-              <div class="timetable-row"><div class="timetable-time">08:35</div><div>出発</div></div>
-              <div class="timetable-row"><div class="timetable-time">08:35-10:50</div><div>自宅 → 新居浜IC → 今治IC → 尾道IC方面 → 千光寺山ロープウェイ周辺 移動中（一般道・松山自動車道・今治小松自動車道・しまなみ海道・一般道）</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:50</div><div>千光寺山ロープウェイ周辺 到着</div></div>
-              <div class="timetable-row"><div class="timetable-time">10:50-11:55</div><div>軽く往復</div></div>
-              <div class="timetable-row"><div class="timetable-time">11:55-12:05</div><div>ロープウェイ乗り場周辺から駐車場所へ徒歩移動・乗車準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">12:05-12:20</div><div>千光寺山ロープウェイ周辺 → 尾道IC → 小谷サービスエリア（下り） 移動中（一般道・山陽自動車道）</div></div>
-              <div class="timetable-row"><div class="timetable-time">12:20-12:25</div><div>サービスエリア駐車・降車・フードコートへ徒歩移動</div></div>
-              <div class="timetable-row"><div class="timetable-time">12:25</div><div>小谷サービスエリア（下り） 到着</div></div>
-              <div class="timetable-row"><div class="timetable-time">12:25-13:25</div><div>昼食</div></div>
-              <div class="timetable-row"><div class="timetable-time">13:25-13:35</div><div>会計・売店確認・トイレ休憩・出発準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">13:35-14:18</div><div>小谷サービスエリア（下り） → 高屋JCT方面 → ホテル方面 移動中（山陽自動車道・東広島呉道路）</div></div>
-              <div class="timetable-row"><div class="timetable-time">14:18-14:28</div><div>高速流出後にホテル周辺の一般道へ移動・駐車・降車準備</div></div>
-              <div class="timetable-row"><div class="timetable-time">14:28</div><div>ホテル到着見込み</div></div>
+              <div class="timetable-row"><div class="timetable-time">08:35</div><div>出発<span class="timetable-duration">(-)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">08:35-10:50</div><div>自宅 → 新居浜IC → 今治IC → 尾道IC方面 → 千光寺山ロープウェイ周辺 移動中（一般道・松山自動車道・今治小松自動車道・しまなみ海道・一般道）<span class="timetable-duration">(135分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:50</div><div>千光寺山ロープウェイ周辺 到着<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">10:50-11:55</div><div>軽く往復<span class="timetable-duration">(65分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">11:55-12:05</div><div>ロープウェイ乗り場周辺から駐車場所へ徒歩移動・乗車準備<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">12:05-12:20</div><div>千光寺山ロープウェイ周辺 → 尾道IC → 小谷サービスエリア（下り） 移動中（一般道・山陽自動車道）<span class="timetable-duration">(15分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">12:20-12:25</div><div>サービスエリア駐車・降車・フードコートへ徒歩移動<span class="timetable-duration">(5分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">12:25</div><div>小谷サービスエリア（下り） 到着<span class="timetable-duration">(0分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">12:25-13:25</div><div>昼食<span class="timetable-duration">(60分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">13:25-13:35</div><div>会計・売店確認・トイレ休憩・出発準備<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">13:35-14:18</div><div>小谷サービスエリア（下り） → 高屋JCT方面 → ホテル方面 移動中（山陽自動車道・東広島呉道路）<span class="timetable-duration">(43分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">14:18-14:28</div><div>高速流出後にホテル周辺の一般道へ移動・駐車・降車準備<span class="timetable-duration">(10分)</span></div></div>
+              <div class="timetable-row"><div class="timetable-time">14:28</div><div>ホテル到着見込み<span class="timetable-duration">(0分)</span></div></div>
             </div>
           </section>
 
