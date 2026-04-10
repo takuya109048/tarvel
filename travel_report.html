@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Report</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+  <style>
+    :root {
+      --bg: #f4eee5;
+      --panel: rgba(255, 251, 245, 0.95);
+      --ink: #1f2933;
+      --muted: #52606d;
+      --line: #d8c8ae;
+      --accent: #9a3412;
+      --accent-soft: #fff1e8;
+      --safe: #0f766e;
+      --warn: #b45309;
+      --stop: #2563eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Hiragino Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fff7ed 0, transparent 30%),
+        linear-gradient(180deg, #f6efe6 0%, var(--bg) 100%);
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 32px auto 56px;
+    }
+
+    .hero,
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 18px 48px rgba(88, 62, 34, 0.09);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      letter-spacing: 0.02em;
+    }
+
+    .sub {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 920px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .facts,
+    .plans,
+    .sources,
+    .notes,
+    .gallery {
+      display: grid;
+      gap: 14px;
+    }
+
+    .facts {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .gallery {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .fact,
+    .plan,
+    .source-item,
+    .note-box,
+    .photo-card {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .fact,
+    .plan,
+    .source-item,
+    .note-box {
+      padding: 16px 18px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .value {
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .plan h3,
+    .source-item h3,
+    .note-box h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .plan p,
+    .source-item p,
+    .note-box p,
+    .note-box li {
+      line-height: 1.7;
+    }
+
+    .plan.safe {
+      border-color: rgba(15, 118, 110, 0.25);
+      background: rgba(240, 253, 250, 0.9);
+    }
+
+    .plan.warn {
+      border-color: rgba(180, 83, 9, 0.25);
+      background: rgba(255, 247, 237, 0.95);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
+    .map-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    #map {
+      width: 100%;
+      min-height: 560px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.55)), #e7edf3;
+    }
+
+    .map-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.8;
+      background: rgba(255,255,255,0.82);
+      z-index: 500;
+    }
+
+    .photo-card {
+      overflow: hidden;
+    }
+
+    .photo-card img {
+      display: block;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: #e5e7eb;
+    }
+
+    .photo-copy {
+      padding: 14px 16px 16px;
+    }
+
+    .photo-copy h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .photo-copy p {
+      line-height: 1.7;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    @media (max-width: 860px) {
+      .map-layout {
+        grid-template-columns: 1fr;
+      }
+
+      #map {
+        min-height: 420px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Travel Report</h1>
+      <p class="sub">
+        2026年4月12日出発、4月13日帰宅の旅行レポートです。
+        出発地は愛媛県新居浜市庄内町5丁目9-20、目的地はシャトレーゼ ガトーキングダム せとうち。
+        到着は 14:30 ごろを狙い、早着しすぎないことを前提に整理しています。
+      </p>
+      <div class="meta">
+        <span class="chip">出発: 2026-04-12</span>
+        <span class="chip">宿泊: 2026-04-12</span>
+        <span class="chip">帰宅: 2026-04-13</span>
+        <span class="chip">移動: 車</span>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2 class="section-title">共通条件</h2>
+        <div class="facts">
+          <div class="fact">
+            <div class="label">出発地</div>
+            <div class="value">愛媛県新居浜市庄内町5丁目9-20</div>
+          </div>
+          <div class="fact">
+            <div class="label">目的地</div>
+            <div class="value">シャトレーゼ ガトーキングダム せとうち</div>
+          </div>
+          <div class="fact">
+            <div class="label">ホテル住所</div>
+            <div class="value">広島県呉市安浦町三津口326-48</div>
+          </div>
+          <div class="fact">
+            <div class="label">到着条件</div>
+            <div class="value">2026-04-12 14:30ごろ到着、早着しすぎない</div>
+          </div>
+          <div class="fact">
+            <div class="label">昼食条件</div>
+            <div class="value">12時ごろに食事へ入れる場所を選ぶ</div>
+          </div>
+          <div class="fact">
+            <div class="label">昼食時間</div>
+            <div class="value">1時間</div>
+          </div>
+          <div class="fact">
+            <div class="label">バッファ</div>
+            <div class="value">立ち寄り先までに30分の余裕しろ</div>
+          </div>
+          <div class="fact">
+            <div class="label">ホテル連絡先</div>
+            <div class="value">0823-84-0262</div>
+          </div>
+        </div>
+        <p class="note">
+          食事は立ち寄りの前後を固定しません。各プランで 12時ごろに入りやすい店を選び、最後は 14:25-14:30 でホテルに入る運用です。
+        </p>
+      </article>
+
+      <article class="card">
+        <h2 class="section-title">比較</h2>
+        <div class="plans">
+          <section class="plan">
+            <h3>プランA: ドルフィンファームしまなみ</h3>
+            <p>立ち寄り: ドルフィンファームしまなみ</p>
+            <p>昼食: 道の駅 伯方S・Cパーク マリンオアシスはかた</p>
+            <p>特徴: 立ち寄り位置が早め。昼食はその後で取る構成です。</p>
+            <p>組みやすさ: 中</p>
+          </section>
+          <section class="plan">
+            <h3>プランB: 多々羅しまなみ公園</h3>
+            <p>立ち寄り: 多々羅しまなみ公園</p>
+            <p>昼食: 多々羅レストラン</p>
+            <p>特徴: 立ち寄りと昼食を同じ場所周辺でまとめやすいです。</p>
+            <p>組みやすさ: 高</p>
+          </section>
+          <section class="plan">
+            <h3>プランC: HAKKOパーク</h3>
+            <p>立ち寄り: HAKKOパーク</p>
+            <p>昼食: HAKKOパーク内カフェ</p>
+            <p>特徴: 尾道側で完結しやすく、千光寺代替として扱いやすいです。</p>
+            <p>組みやすさ: 高</p>
+          </section>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2 class="section-title">個別タイムテーブル</h2>
+        <div class="plans">
+          <section class="plan safe">
+            <h3>プランA: ドルフィンファームしまなみ</h3>
+            <p>08:25 出発</p>
+            <p>09:31 今治IC 通過見込み</p>
+            <p>10:05 ドルフィンファームしまなみ 到着</p>
+            <p>10:05-10:45 見学</p>
+            <p>11:40 道の駅 伯方S・Cパーク マリンオアシスはかた 到着</p>
+            <p>11:40-12:40 昼食</p>
+            <p>14:28 ホテル到着見込み</p>
+          </section>
+
+          <section class="plan safe">
+            <h3>プランB: 多々羅しまなみ公園</h3>
+            <p>08:40 出発</p>
+            <p>09:46 今治IC 通過見込み</p>
+            <p>10:35 多々羅しまなみ公園 到着</p>
+            <p>10:35-11:10 散策</p>
+            <p>11:55 多々羅レストラン 到着</p>
+            <p>11:55-12:55 昼食</p>
+            <p>14:27 ホテル到着見込み</p>
+          </section>
+
+          <section class="plan safe">
+            <h3>プランC: HAKKOパーク</h3>
+            <p>08:30 出発</p>
+            <p>10:20 HAKKOパーク 到着</p>
+            <p>10:20-11:05 見学</p>
+            <p>11:55 HAKKOパーク内カフェ 到着</p>
+            <p>11:55-12:55 昼食</p>
+            <p>14:26 ホテル到着見込み</p>
+          </section>
+
+          <section class="plan warn">
+            <h3>運用メモ</h3>
+            <p>どのプランも 14:30 に対して数分の余裕で合わせています。</p>
+            <p>途中で巻いた場合は、立ち寄り先ではなく昼食地点で調整する方が安定します。</p>
+          </section>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2 class="section-title">Route Map</h2>
+        <div class="map-layout">
+          <div id="map" aria-label="旅行ルートマップ">
+            <div class="map-fallback" id="map-fallback">
+              地図ライブラリまたは道路ルートを読み込めなかったため、実道路経路を表示できません。
+            </div>
+          </div>
+          <div class="notes">
+            <section class="note-box">
+              <h3>地図の表示</h3>
+              <p>地図は Leaflet と OpenStreetMap、ルートは OSRM の車ルーティングを使っています。</p>
+            </section>
+            <section class="note-box">
+              <h3>描画中のルート</h3>
+              <p>地図上には 3プランすべての車ルートを重ねて表示しています。</p>
+              <p>ドルフィンファームしまなみ、多々羅しまなみ公園、HAKKOパークを色分けしています。</p>
+            </section>
+            <section class="note-box">
+              <h3>通過順</h3>
+              <ul>
+                <li>出発地</li>
+                <li>新居浜IC</li>
+                <li>今治IC</li>
+                <li>各プランごとの立ち寄り先</li>
+                <li>各プランごとの昼食地点</li>
+                <li>高屋JCT</li>
+                <li>ホテル</li>
+              </ul>
+            </section>
+            <section class="note-box">
+              <h3>色分け</h3>
+              <ul>
+                <li>赤: ドルフィンファームしまなみプラン</li>
+                <li>緑: 多々羅しまなみ公園プラン</li>
+                <li>青: HAKKOパークプラン</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2 class="section-title">Spot Photos</h2>
+        <div class="gallery">
+          <figure class="photo-card">
+            <img src="https://tabetainjya.com/img/1910/kodani19.jpg" alt="小谷サービスエリア下りの外観" loading="lazy">
+            <figcaption class="photo-copy">
+              <h3>小谷サービスエリア（下り）</h3>
+              <p>広島側で時間調整しやすい代表候補です。</p>
+            </figcaption>
+          </figure>
+          <figure class="photo-card">
+            <img src="https://tabetainjya.com/img/1910/kodani05.jpg" alt="小谷サービスエリアのフードコート" loading="lazy">
+            <figcaption class="photo-copy">
+              <h3>フードコート</h3>
+              <p>広島側プランでの昼食候補イメージです。</p>
+            </figcaption>
+          </figure>
+          <figure class="photo-card">
+            <img src="https://hit-product-resources-public.s3.ap-northeast-1.amazonaws.com/images/4712/2llE1Kch7iXpOcKxWP03/original.jpg" alt="シャトレーゼ ガトーキングダム せとうちの外観" loading="lazy">
+            <figcaption class="photo-copy">
+              <h3>シャトレーゼ ガトーキングダム せとうち</h3>
+              <p>14:25-14:30 に入る想定です。</p>
+            </figcaption>
+          </figure>
+          <figure class="photo-card">
+            <img src="https://hit-product-resources-public.s3.ap-northeast-1.amazonaws.com/images/4712/5xxTEa7kVgfjSPoKKL3E/original.jpg" alt="ホテル周辺イメージ" loading="lazy">
+            <figcaption class="photo-copy">
+              <h3>ホテル周辺</h3>
+              <p>到着後の景観イメージです。</p>
+            </figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2 class="section-title">Sources</h2>
+        <div class="sources">
+          <section class="source-item">
+            <h3>高速所要</h3>
+            <p>新居浜IC → 今治IC: 通常 1時間6分</p>
+            <p>今治IC → 高屋JCT: 通常 1時間37分</p>
+            <p><a href="https://www.navitime.co.jp/highway/route/searchlist?arvIcId=403120&arvIcType=ic&depIcId=47040&depIcType=ic">NAVITIME</a></p>
+            <p><a href="https://www.atis.co.jp/route/result/1383-2177/">ATIS</a></p>
+          </section>
+
+          <section class="source-item">
+            <h3>ドルフィンファームしまなみ</h3>
+            <p><a href="https://www.df-shimanami.com/access/">公式アクセス</a></p>
+            <p><a href="https://www.df-shimanami.com/facility_information/">公式施設案内</a></p>
+          </section>
+
+          <section class="source-item">
+            <h3>マリンオアシスはかた</h3>
+            <p><a href="https://www.ononavi.jp/brand/detail.html?detail_id=828">尾道観光情報</a></p>
+          </section>
+
+          <section class="source-item">
+            <h3>多々羅しまなみ公園 / 多々羅レストラン</h3>
+            <p><a href="https://www.oideya.gr.jp/spot-c/tatara-3/">今治地方観光協会</a></p>
+            <p><a href="https://imabari-shimanami.jp/tatara-restaurant/">レストラン案内</a></p>
+          </section>
+
+          <section class="source-item">
+            <h3>HAKKOパーク</h3>
+            <p><a href="https://mandahakkopark.com/">公式サイト</a></p>
+            <p><a href="https://www.mandahakko.com/article/shop.html">万田発酵公式案内</a></p>
+          </section>
+
+          <section class="source-item">
+            <h3>ホテル</h3>
+            <p><a href="https://setouchi.gateauxkingdom.com/">ホテル公式</a></p>
+            <p><a href="https://travel.rakuten.co.jp/HOTEL/164652/164652_std.html">楽天トラベル</a></p>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <p class="footer">このファイルは会話内容に応じて更新する運用を想定しています。</p>
+  </main>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script>
+    const baseStops = {
+      home: { name: "出発地", position: { lat: 33.9579, lng: 133.2837 }, kind: "start", description: "愛媛県新居浜市庄内町5丁目9-20" },
+      niihamaIc: { name: "新居浜IC", position: { lat: 33.9303, lng: 133.3326 }, kind: "via", description: "高速流入地点" },
+      imabariIc: { name: "今治IC", position: { lat: 34.0430, lng: 132.9970 }, kind: "via", description: "しまなみ海道側の主要通過点" },
+      hakataArea: { name: "マリンオアシスはかた", position: { lat: 34.2138, lng: 133.0724 }, kind: "meal", description: "プランAの昼食地点" },
+      dolphinFarm: { name: "ドルフィンファームしまなみ", position: { lat: 34.2148, lng: 133.1075 }, kind: "stop", description: "プランAの立ち寄り地点" },
+      tataraPark: { name: "多々羅しまなみ公園", position: { lat: 34.2439, lng: 132.9968 }, kind: "stop", description: "プランBの立ち寄り地点" },
+      tataraRestaurant: { name: "多々羅レストラン", position: { lat: 34.2436, lng: 132.9975 }, kind: "meal", description: "プランBの昼食地点" },
+      onomichiIc: { name: "尾道IC", position: { lat: 34.3913, lng: 133.1706 }, kind: "via", description: "尾道側の主要分岐" },
+      hakkoPark: { name: "HAKKOパーク", position: { lat: 34.3369, lng: 133.2207 }, kind: "stop", description: "プランCの立ち寄り地点と昼食地点" },
+      takayaJct: { name: "高屋JCT", position: { lat: 34.4261, lng: 132.7943 }, kind: "via", description: "東広島呉道路方面への主要分岐" },
+      hotel: { name: "目的地", position: { lat: 34.2701, lng: 132.8127 }, kind: "goal", description: "シャトレーゼ ガトーキングダム せとうち" }
+    };
+
+    const plans = [
+      {
+        key: "dolphin",
+        label: "ドルフィンファームしまなみプラン",
+        color: "#b91c1c",
+        stops: [
+          baseStops.home,
+          baseStops.niihamaIc,
+          baseStops.imabariIc,
+          baseStops.dolphinFarm,
+          baseStops.hakataArea,
+          baseStops.takayaJct,
+          baseStops.hotel
+        ]
+      },
+      {
+        key: "tatara",
+        label: "多々羅しまなみ公園プラン",
+        color: "#15803d",
+        stops: [
+          baseStops.home,
+          baseStops.niihamaIc,
+          baseStops.imabariIc,
+          baseStops.tataraPark,
+          baseStops.tataraRestaurant,
+          baseStops.takayaJct,
+          baseStops.hotel
+        ]
+      },
+      {
+        key: "hakko",
+        label: "HAKKOパークプラン",
+        color: "#2563eb",
+        stops: [
+          baseStops.home,
+          baseStops.niihamaIc,
+          baseStops.imabariIc,
+          baseStops.onomichiIc,
+          baseStops.hakkoPark,
+          baseStops.takayaJct,
+          baseStops.hotel
+        ]
+      }
+    ];
+
+    function markerColor(kind) {
+      if (kind === "start" || kind === "goal") return "#9a3412";
+      if (kind === "meal") return "#0f766e";
+      if (kind === "stop") return "#2563eb";
+      return "#7c5a3a";
+    }
+
+    function buildFallbackMap(message) {
+      const fallback = document.getElementById("map-fallback");
+      if (message) fallback.textContent = message;
+      fallback.style.display = "flex";
+    }
+
+    function createMarkerIcon(kind, index) {
+      return L.divIcon({
+        className: "",
+        html:
+          "<div style='width:28px;height:28px;border-radius:999px;display:flex;align-items:center;justify-content:center;" +
+          "background:" + markerColor(kind) + ";color:#fffaf2;font:700 13px/1 Yu Gothic,Hiragino Sans,sans-serif;" +
+          "border:2px solid #fffaf2;box-shadow:0 6px 18px rgba(31,41,51,0.18);'>" + index + "</div>",
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
+        popupAnchor: [0, -12]
+      });
+    }
+
+    async function fetchDetailedRoute(stops) {
+      const coordinates = stops.map((stop) => `${stop.position.lng},${stop.position.lat}`).join(";");
+      const url = "https://router.project-osrm.org/route/v1/driving/" + coordinates + "?overview=full&geometries=geojson&steps=false";
+      const response = await fetch(url, { headers: { Accept: "application/json" } });
+      if (!response.ok) throw new Error("Routing service returned an error.");
+      const data = await response.json();
+      if (!data.routes || !data.routes.length || !data.routes[0].geometry) throw new Error("No route geometry.");
+      return data.routes[0].geometry.coordinates.map(([lng, lat]) => [lat, lng]);
+    }
+
+    function addMarkers(map, bounds) {
+      const seen = new Map();
+      plans.forEach((plan) => {
+        plan.stops.forEach((stop) => {
+          if (!seen.has(stop.name)) {
+            seen.set(stop.name, stop);
+          }
+        });
+      });
+
+      Array.from(seen.values()).forEach((stop, index) => {
+        const latLng = [stop.position.lat, stop.position.lng];
+        bounds.extend(latLng);
+        L.marker(latLng, {
+          icon: createMarkerIcon(stop.kind, index + 1),
+          title: stop.name
+        }).addTo(map).bindPopup(
+          "<div style='font-family:Yu Gothic,Hiragino Sans,sans-serif;line-height:1.6'><strong>" +
+          stop.name + "</strong><br>" + stop.description + "</div>"
+        );
+      });
+    }
+
+    async function initMap() {
+      if (!window.L) {
+        buildFallbackMap("地図ライブラリを読み込めなかったため、地図を表示できません。");
+        return;
+      }
+
+      const map = L.map("map", {
+        zoomControl: true,
+        scrollWheelZoom: true
+      });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      const bounds = L.latLngBounds([]);
+      addMarkers(map, bounds);
+
+      let hadRoutingError = false;
+
+      for (const plan of plans) {
+        try {
+          const routeLatLngs = await fetchDetailedRoute(plan.stops);
+          L.polyline(routeLatLngs, {
+            color: plan.color,
+            weight: 5,
+            opacity: 0.75
+          }).addTo(map).bindPopup(plan.label);
+          routeLatLngs.forEach((latLng) => bounds.extend(latLng));
+        } catch (error) {
+          hadRoutingError = true;
+          const fallbackPath = plan.stops.map((stop) => [stop.position.lat, stop.position.lng]);
+          L.polyline(fallbackPath, {
+            color: plan.color,
+            weight: 4,
+            opacity: 0.35,
+            dashArray: "8 10"
+          }).addTo(map).bindPopup(plan.label + "（簡易経路）");
+        }
+      }
+
+      if (hadRoutingError) {
+        buildFallbackMap("一部または全部の実道路ルートを取得できなかったため、簡易経路を含んで表示しています。");
+      }
+
+      map.fitBounds(bounds, { padding: [28, 28] });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initMap);
+    } else {
+      initMap();
+    }
+  </script>
+</body>
+</html>
