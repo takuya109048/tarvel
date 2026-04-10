@@ -216,23 +216,6 @@
     .accordion-body { display: none; padding-top: 18px; }
     .accordion-item.is-open .accordion-body { display: block; }
 
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .filter-input {
-      width: min(320px, 100%);
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fffdf8;
-    }
-
     .table-wrap {
       overflow-x: auto;
       border: 1px solid var(--line);
@@ -256,21 +239,7 @@
 
     th { background: #fff6ee; white-space: nowrap; }
 
-    th button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .sort-indicator { font-size: 12px; color: var(--muted); }
     tbody tr:last-child td { border-bottom: 0; }
-    tbody tr[hidden] { display: none; }
 
     .tab-list {
       display: flex;
@@ -421,8 +390,6 @@
     @media (max-width: 860px) {
       .map-layout { grid-template-columns: 1fr; }
       #map { min-height: 420px; }
-      .toolbar { align-items: stretch; }
-      .filter-input { width: 100%; }
       .timetable-table { min-width: 560px; }
       .timetable-table th,
       .timetable-table td {
@@ -491,10 +458,6 @@
         font-size: 14px;
       }
 
-      .toolbar {
-        align-items: stretch;
-      }
-
       .tab-list {
         flex-wrap: wrap;
       }
@@ -502,7 +465,6 @@
       button,
       .tab-button,
       .accordion-toggle,
-      th button,
       input,
       select,
       textarea {
@@ -510,8 +472,7 @@
       }
 
       .tab-button,
-      .accordion-toggle,
-      th button {
+      .accordion-toggle {
         display: flex;
         align-items: center;
       }
@@ -544,14 +505,6 @@
         grid-template-columns: 1fr;
       }
 
-      .filter-input,
-      .toolbar input,
-      .toolbar button,
-      .toolbar select,
-      .toolbar textarea {
-        width: 100%;
-      }
-
       .table-wrap,
       .timetable-table-wrap {
         overflow-x: auto;
@@ -562,8 +515,52 @@
         min-width: 0;
       }
 
+      .table-wrap {
+        overflow: visible;
+      }
+
       #comparison-table {
-        min-width: 640px;
+        min-width: 0;
+      }
+
+      #comparison-table thead {
+        display: none;
+      }
+
+      #comparison-table tbody {
+        display: block;
+      }
+
+      #comparison-table tbody tr {
+        display: block;
+        margin-bottom: 12px;
+        padding: 14px;
+        border-bottom: 1px solid #eadfcd;
+      }
+
+      #comparison-table tbody tr:last-child {
+        margin-bottom: 0;
+        border-bottom: 0;
+      }
+
+      #comparison-table tbody td {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        white-space: normal;
+      }
+
+      #comparison-table tbody td + td {
+        margin-top: 10px;
+      }
+
+      #comparison-table tbody td::before {
+        content: attr(data-label);
+        flex: 0 0 88px;
+        color: var(--muted);
+        font-weight: 700;
       }
 
       .timetable-table-wrap {
@@ -708,35 +705,31 @@
           <h2 class="section-title">プラン比較</h2>
         </button>
         <div class="accordion-body">
-          <div class="toolbar">
-            <div class="label">ヘッダークリックで並び替え / テキストで絞り込み</div>
-            <input id="comparison-filter" class="filter-input" type="text" placeholder="プラン名・立ち寄り先・昼食場所で検索">
-          </div>
           <div class="table-wrap">
             <table id="comparison-table">
               <thead>
                 <tr>
-                  <th><button type="button" data-sort="plan">プラン<span class="sort-indicator">⇅</span></button></th>
-                  <th><button type="button" data-sort="spot">立ち寄り<span class="sort-indicator">⇅</span></button></th>
-                  <th><button type="button" data-sort="lunch">昼食<span class="sort-indicator">⇅</span></button></th>
-                  <th><button type="button" data-sort="departure">出発<span class="sort-indicator">⇅</span></button></th>
-                  <th><button type="button" data-sort="arrival">ホテル到着<span class="sort-indicator">⇅</span></button></th>
-                  <th><button type="button" data-sort="duration">総所要<span class="sort-indicator">⇅</span></button></th>
-                  <th><button type="button" data-sort="fit">組みやすさ<span class="sort-indicator">⇅</span></button></th>
+                  <th>プラン</th>
+                  <th>立ち寄り</th>
+                  <th>昼食</th>
+                  <th>出発</th>
+                  <th>ホテル到着</th>
+                  <th>総所要</th>
+                  <th>組みやすさ</th>
                 </tr>
               </thead>
               <tbody>
-                <tr data-plan="Plan A ドルフィンファームしまなみ" data-spot="ドルフィンファームしまなみ" data-lunch="道の駅 伯方S・Cパーク マリンオアシスはかた" data-departure="08:25" data-arrival="14:28" data-duration="6時間03分" data-fit="中">
-                  <td>Plan A</td><td>ドルフィンファームしまなみ</td><td>道の駅 伯方S・Cパーク マリンオアシスはかた</td><td>08:25</td><td>14:28</td><td>6時間03分</td><td>中</td>
+                <tr>
+                  <td data-label="プラン">Plan A</td><td data-label="立ち寄り">ドルフィンファームしまなみ</td><td data-label="昼食">道の駅 伯方S・Cパーク マリンオアシスはかた</td><td data-label="出発">08:25</td><td data-label="ホテル到着">14:28</td><td data-label="総所要">6時間03分</td><td data-label="組みやすさ">中</td>
                 </tr>
-                <tr data-plan="Plan B 多々羅しまなみ公園" data-spot="多々羅しまなみ公園" data-lunch="多々羅レストラン" data-departure="08:40" data-arrival="14:27" data-duration="5時間47分" data-fit="高">
-                  <td>Plan B</td><td>多々羅しまなみ公園</td><td>多々羅レストラン</td><td>08:40</td><td>14:27</td><td>5時間47分</td><td>高</td>
+                <tr>
+                  <td data-label="プラン">Plan B</td><td data-label="立ち寄り">多々羅しまなみ公園</td><td data-label="昼食">多々羅レストラン</td><td data-label="出発">08:40</td><td data-label="ホテル到着">14:27</td><td data-label="総所要">5時間47分</td><td data-label="組みやすさ">高</td>
                 </tr>
-                <tr data-plan="Plan C HAKKOパーク" data-spot="HAKKOパーク" data-lunch="HAKKOパーク内カフェ" data-departure="08:30" data-arrival="14:26" data-duration="5時間56分" data-fit="高">
-                  <td>Plan C</td><td>HAKKOパーク</td><td>HAKKOパーク内カフェ</td><td>08:30</td><td>14:26</td><td>5時間56分</td><td>高</td>
+                <tr>
+                  <td data-label="プラン">Plan C</td><td data-label="立ち寄り">HAKKOパーク</td><td data-label="昼食">HAKKOパーク内カフェ</td><td data-label="出発">08:30</td><td data-label="ホテル到着">14:26</td><td data-label="総所要">5時間56分</td><td data-label="組みやすさ">高</td>
                 </tr>
-                <tr data-plan="Plan D 千光寺山ロープウェイ" data-spot="千光寺山ロープウェイ" data-lunch="小谷サービスエリア（下り）" data-departure="08:35" data-arrival="14:28" data-duration="5時間53分" data-fit="中">
-                  <td>Plan D</td><td>千光寺山ロープウェイ</td><td>小谷サービスエリア（下り）</td><td>08:35</td><td>14:28</td><td>5時間53分</td><td>中</td>
+                <tr>
+                  <td data-label="プラン">Plan D</td><td data-label="立ち寄り">千光寺山ロープウェイ</td><td data-label="昼食">小谷サービスエリア（下り）</td><td data-label="出発">08:35</td><td data-label="ホテル到着">14:28</td><td data-label="総所要">5時間53分</td><td data-label="組みやすさ">中</td>
                 </tr>
               </tbody>
             </table>
@@ -1257,85 +1250,9 @@
       });
     }
 
-    function toMinutes(value) {
-      const match = String(value).match(/^(\d{2}):(\d{2})$/);
-      if (!match) return Number.MAX_SAFE_INTEGER;
-      return Number(match[1]) * 60 + Number(match[2]);
-    }
-
-    function toDurationMinutes(value) {
-      const match = String(value).match(/(\d+)時間(\d+)分/);
-      if (!match) return Number.MAX_SAFE_INTEGER;
-      return Number(match[1]) * 60 + Number(match[2]);
-    }
-
-    function sortValue(row, key) {
-      const value = row.dataset[key] || "";
-      if (key === "departure" || key === "arrival") return toMinutes(value);
-      if (key === "duration") return toDurationMinutes(value);
-      if (key === "fit") return value === "高" ? 2 : 1;
-      return value;
-    }
-
-    function initComparisonTable() {
-      const table = document.getElementById("comparison-table");
-      const tbody = table ? table.querySelector("tbody") : null;
-      const filterInput = document.getElementById("comparison-filter");
-      if (!table || !tbody || !filterInput) return;
-
-      let currentSort = { key: "plan", direction: 1 };
-
-      function applyFilter() {
-        const term = filterInput.value.trim().toLowerCase();
-        Array.from(tbody.rows).forEach(function (row) {
-          const text = row.textContent.toLowerCase();
-          row.hidden = term ? text.indexOf(term) === -1 : false;
-        });
-      }
-
-      function applySort(key) {
-        currentSort = {
-          key: key,
-          direction: currentSort.key === key ? currentSort.direction * -1 : 1
-        };
-
-        const rows = Array.from(tbody.rows);
-        rows.sort(function (a, b) {
-          const left = sortValue(a, currentSort.key);
-          const right = sortValue(b, currentSort.key);
-          if (left < right) return -1 * currentSort.direction;
-          if (left > right) return 1 * currentSort.direction;
-          return 0;
-        });
-
-        rows.forEach(function (row) {
-          tbody.appendChild(row);
-        });
-
-        table.querySelectorAll("th button").forEach(function (button) {
-          const indicator = button.querySelector(".sort-indicator");
-          const keyName = button.getAttribute("data-sort");
-          if (!indicator) return;
-          indicator.textContent = keyName === currentSort.key ? (currentSort.direction === 1 ? "↑" : "↓") : "⇅";
-        });
-      }
-
-      table.querySelectorAll("th button").forEach(function (button) {
-        button.addEventListener("click", function () {
-          applySort(button.getAttribute("data-sort"));
-          applyFilter();
-        });
-      });
-
-      filterInput.addEventListener("input", applyFilter);
-      applySort("plan");
-      applyFilter();
-    }
-
     function initPage() {
       initAccordion();
       initTabs();
-      initComparisonTable();
       initMap();
     }
 
